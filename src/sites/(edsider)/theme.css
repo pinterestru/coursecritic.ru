@@ -1,0 +1,19 @@
+@layer theme {
+  :root {
+    --color-bg: 248 250 252;
+    --color-surface: 255 255 255;
+    --color-fg: 15 23 42;
+    --color-primary: 14 165 233;
+    --color-primary-fg: 255 255 255;
+    --color-muted: 100 116 139;
+    --color-rule: 226 232 240;
+    --color-accent: 245 158 11;
+    --color-success: 16 185 129;
+    --color-danger: 244 63 94;
+  }
+
+  body {
+    font-family: var(--font-body, ui-sans-serif, system-ui, sans-serif);
+    -webkit-font-smoothing: antialiased;
+  }
+}

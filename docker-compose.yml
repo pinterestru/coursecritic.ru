@@ -1,0 +1,56 @@
+services:
+  app:
+    image: ${COMPOSE_PROJECT_NAME:-site-ui}:${TAG:-latest}
+    container_name: ${COMPOSE_PROJECT_NAME:-site-ui}
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: ${NODE_ENV:-production}
+        SITE_CONFIG: ${SITE_CONFIG:?SITE_CONFIG is required}
+        LOG_LEVEL: ${LOG_LEVEL:-info}
+        PORT: ${PORT:-3000}
+        API_BASE_URL: ${API_BASE_URL-}
+        API_MEDIA_URL: ${API_MEDIA_URL-}
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      SITE_CONFIG: ${SITE_CONFIG:?SITE_CONFIG is required}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      PORT: ${PORT:-3000}
+      API_BASE_URL: ${API_BASE_URL-}
+      API_MEDIA_URL: ${API_MEDIA_URL-}
+      HOSTNAME: 0.0.0.0
+    ports:
+      - '127.0.0.1:${PORT:-3000}:${PORT:-3000}'
+    networks:
+      - app_network
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "require('http').get('http://localhost:${PORT:-3000}/api/health', (res) => process.exit(res.statusCode === 200 ? 0 : 1))",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+        max-file: '10'
+
+networks:
+  app_network:
+    driver: bridge

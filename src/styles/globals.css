@@ -1,0 +1,9 @@
+@import 'tailwindcss';
+@import './active-theme.css';
+
+@layer base {
+  html {
+    background-color: rgb(var(--color-bg) / 1);
+    color: rgb(var(--color-fg) / 1);
+  }
+}

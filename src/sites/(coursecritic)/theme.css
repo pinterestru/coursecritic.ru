@@ -1,0 +1,24 @@
+@layer theme {
+  :root {
+    --color-bg: 252 248 240;
+    --color-fg: 51 38 30;
+    --color-primary: 181 78 39;
+    --color-primary-fg: 252 248 240;
+    --color-muted: 124 108 96;
+    --color-rule: 217 203 185;
+  }
+
+  body {
+    font-family: var(--font-body, ui-sans-serif, system-ui, sans-serif);
+    font-feature-settings: 'ss01', 'cv11';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  blockquote {
+    font-family: var(--font-serif, Georgia, 'PT Serif', serif);
+  }
+}

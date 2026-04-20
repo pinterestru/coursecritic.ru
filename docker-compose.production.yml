@@ -1,0 +1,39 @@
+# Production Docker Compose — copied to the server during deployment
+# and used with a .env file written by the deploy workflow.
+
+services:
+  app:
+    image: ${IMAGE_TAG}
+    container_name: ${COMPOSE_PROJECT_NAME}
+    env_file: .env
+    ports:
+      - '127.0.0.1:${PORT:-3000}:${PORT:-3000}'
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "require('http').get('http://localhost:${PORT:-3000}/api/health', (res) => process.exit(res.statusCode === 200 ? 0 : 1))",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '100m'
+        max-file: '10'
+    labels:
+      - 'com.github.repository=${GITHUB_REPOSITORY}'
+      - 'com.github.commit=${GITHUB_SHA}'
+      - 'com.github.run-id=${GITHUB_RUN_ID}'
+      - 'com.site.config=${SITE_CONFIG}'
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge

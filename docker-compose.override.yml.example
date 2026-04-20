@@ -1,0 +1,23 @@
+# Example docker-compose override for local development.
+# Copy to docker-compose.override.yml (gitignored) — Compose loads it automatically.
+
+services:
+  app:
+    build:
+      cache_from:
+        - type=local,src=/tmp/.buildx-cache
+      cache_to:
+        - type=local,dest=/tmp/.buildx-cache,mode=max
+
+    environment:
+      NODE_ENV: development
+      LOG_LEVEL: debug
+
+    deploy:
+      resources:
+        limits:
+          cpus: null
+          memory: null
+        reservations:
+          cpus: null
+          memory: null
