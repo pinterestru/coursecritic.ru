@@ -310,7 +310,7 @@ export default function ArticlePage() {
             <a
               href="mailto:anya@coursecritic.ru"
               className="underline underline-offset-2"
-              style={{ color: 'rgb(var(--color-primary))' }}
+              style={{ color: 'rgb(var(--color-link))' }}
             >
               anya@coursecritic.ru
             </a>

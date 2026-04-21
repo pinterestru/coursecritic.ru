@@ -5,8 +5,11 @@ import AffiliateLink from '../../components/AffiliateLink'
 import CourseCard from '../../components/CourseCard'
 import Rating from '../../components/Rating'
 import ReviewCard from '../../components/ReviewCard'
-import { categories, courses } from '../../data/practicum-courses'
+import { categoriesOrder, courses as allCourses } from '../../data/practicum-courses'
 import { reviews } from '../../data/practicum-reviews'
+
+const courses = allCourses.filter((c) => c.schoolId === 'practicum')
+const categories = categoriesOrder.filter((cat) => courses.some((c) => c.category === cat))
 
 export const metadata: Metadata = {
   title: 'Яндекс Практикум — обзор онлайн-школы и все курсы',
@@ -107,7 +110,7 @@ function Hero() {
 function KeyFacts() {
   const facts = [
     { label: 'Запущена', value: '2019' },
-    { label: 'Программ в каталоге', value: '60+' },
+    { label: 'Направления', value: 'IT, дизайн, управление' },
     { label: 'Формат', value: 'Онлайн + ревью' },
     { label: 'Выпускников', value: '90 тыс.+' },
   ]
@@ -183,8 +186,8 @@ function Programs() {
             Программы Яндекс Практикума
           </h2>
           <p className="mt-2 max-w-2xl text-sm" style={{ color: 'rgb(var(--color-muted))' }}>
-            {courses.length} актуальных программ по всем направлениям школы. Нажмите на карточку,
-            чтобы перейти на официальный сайт и изучить подробности.
+            Актуальные программы по всем направлениям школы. Нажмите на карточку, чтобы перейти на
+            официальный сайт и изучить подробности.
           </p>
         </div>
         <div className="flex flex-wrap gap-2 text-xs">

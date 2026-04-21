@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, PT_Serif } from 'next/font/google'
 import type { ReactNode } from 'react'
 
 import { activeSiteConfig } from '@/config/sites/active.generated'
@@ -14,6 +14,14 @@ const inter = Inter({
   variable: '--font-body',
 })
 
+const ptSerif = PT_Serif({
+  subsets: ['cyrillic', 'latin'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-editorial',
+})
+
 export const metadata: Metadata = {
   title: {
     default: activeSiteConfig.brand.name,
@@ -25,7 +33,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang={activeSiteConfig.locale} className={inter.variable}>
+    <html lang={activeSiteConfig.locale} className={`${inter.variable} ${ptSerif.variable}`}>
       <body className="flex min-h-screen flex-col">
         <SiteHeader />
         <div className="flex-1">{children}</div>

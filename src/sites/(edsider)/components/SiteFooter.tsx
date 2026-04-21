@@ -11,7 +11,7 @@ export default function SiteFooter() {
     >
       <Newsletter />
 
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <Brand />
         <Column title="Навигация">
           <FooterLink href="/">Главная</FooterLink>
@@ -41,23 +41,29 @@ function Newsletter() {
       className="border-b"
       style={{
         borderColor: 'rgb(var(--color-rule))',
-        background:
-          'linear-gradient(110deg, rgb(var(--color-primary) / 0.08) 0%, rgb(var(--color-primary) / 0.02) 60%, rgb(var(--color-surface)) 100%)',
+        background: 'rgb(var(--color-bg))',
       }}
     >
-      <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-6 py-10 lg:flex-row lg:items-center lg:justify-between">
+      <div className="mx-auto flex max-w-6xl flex-col items-start gap-8 px-6 py-14 lg:flex-row lg:items-center lg:justify-between">
         <div className="max-w-xl">
+          <div className="flex items-center gap-3">
+            <span
+              className="inline-block h-2 w-2 rounded-full"
+              style={{ background: 'rgb(var(--color-primary))' }}
+              aria-hidden
+            />
+            <span
+              className="text-[11px] font-bold tracking-[0.22em] uppercase"
+              style={{ color: 'rgb(var(--color-primary))' }}
+            >
+              Письмо месяца
+            </span>
+          </div>
           <p
-            className="text-[11px] font-semibold tracking-[0.18em] uppercase"
-            style={{ color: 'rgb(var(--color-primary))' }}
-          >
-            Письмо месяца
-          </p>
-          <p
-            className="mt-2 text-xl leading-snug font-bold"
+            className="font-editorial mt-3 text-3xl leading-[1.1] font-bold"
             style={{ color: 'rgb(var(--color-fg))' }}
           >
-            Раз в месяц — подборка обновлённых обзоров и новых школ в каталоге.
+            Раз в месяц — подборка новых обзоров.
           </p>
           <p className="mt-2 text-sm" style={{ color: 'rgb(var(--color-muted))' }}>
             Без рекламы и партнёрских материалов. Только редакция.
@@ -72,19 +78,19 @@ function Newsletter() {
             id="newsletter-email"
             type="email"
             placeholder="you@example.ru"
-            className="h-11 flex-1 rounded-lg border px-4 text-sm outline-none focus:ring-2"
+            className="h-12 flex-1 rounded-sm border-[1.5px] px-4 text-sm outline-none focus:ring-0"
             style={{
-              borderColor: 'rgb(var(--color-rule))',
+              borderColor: 'rgb(var(--color-fg))',
               background: 'rgb(var(--color-surface))',
               color: 'rgb(var(--color-fg))',
             }}
           />
           <button
             type="button"
-            className="h-11 rounded-lg px-5 text-sm font-semibold whitespace-nowrap transition-transform hover:-translate-y-[1px]"
+            className="h-12 rounded-sm px-6 text-sm font-bold tracking-wider whitespace-nowrap uppercase transition-transform hover:-translate-y-[1px]"
             style={{
-              background: 'rgb(var(--color-fg))',
-              color: 'rgb(var(--color-surface))',
+              background: 'rgb(var(--color-primary))',
+              color: 'rgb(var(--color-primary-fg))',
             }}
           >
             Подписаться
@@ -100,7 +106,7 @@ function Brand() {
     <div>
       <div className="flex items-center gap-3">
         <span
-          className="flex h-12 w-12 items-center justify-center rounded-xl text-sm font-extrabold tracking-tight"
+          className="flex h-11 w-11 items-center justify-center rounded-md text-sm font-extrabold tracking-tight"
           style={{
             background: 'rgb(var(--color-primary))',
             color: 'rgb(var(--color-primary-fg))',
@@ -109,50 +115,35 @@ function Brand() {
           ED
         </span>
         <div>
-          <p className="text-base font-bold" style={{ color: 'rgb(var(--color-fg))' }}>
+          <p className="font-editorial text-xl font-bold" style={{ color: 'rgb(var(--color-fg))' }}>
             EDсайдер
           </p>
-          <p className="text-xs" style={{ color: 'rgb(var(--color-muted))' }}>
+          <p
+            className="text-[11px] tracking-[0.12em] uppercase"
+            style={{ color: 'rgb(var(--color-muted))' }}
+          >
             витрина онлайн-курсов
           </p>
         </div>
       </div>
       <p
-        className="mt-5 max-w-sm text-sm leading-relaxed"
-        style={{ color: 'rgb(var(--color-muted))' }}
+        className="font-editorial mt-6 max-w-sm text-[17px] leading-[1.5] italic"
+        style={{ color: 'rgb(var(--color-fg))' }}
       >
-        Независимый каталог российских IT-школ. Сверяем учебные планы с вакансиями, читаем отзывы
-        целиком и обновляем цены каждую неделю.
+        «Независимый каталог российских онлайн-школ. Читаем учебные планы целиком и не берём денег
+        за место в подборке.»
       </p>
-
-      <dl
-        className="mt-6 grid grid-cols-2 gap-3 rounded-xl border p-4"
-        style={{
-          borderColor: 'rgb(var(--color-rule))',
-          background: 'rgb(var(--color-bg))',
-        }}
-      >
-        <Stat value="24" label="школы" />
-        <Stat value="420+" label="программы" />
-        <Stat value="7.8к" label="отзывов" />
-        <Stat value="2025" label="в работе" />
-      </dl>
-    </div>
-  )
-}
-
-function Stat({ value, label }: { value: string; label: string }) {
-  return (
-    <div className="flex items-baseline gap-2">
-      <span className="text-lg font-bold" style={{ color: 'rgb(var(--color-fg))' }}>
-        {value}
-      </span>
-      <span
-        className="text-[11px] tracking-wider uppercase"
+      <div
+        className="mt-6 flex items-center gap-3 text-[11px] tracking-[0.12em] uppercase"
         style={{ color: 'rgb(var(--color-muted))' }}
       >
-        {label}
-      </span>
+        <span
+          className="inline-block h-[1px] w-8"
+          style={{ background: 'rgb(var(--color-fg))' }}
+          aria-hidden
+        />
+        <span>Редакция EDсайдер</span>
+      </div>
     </div>
   )
 }
@@ -161,12 +152,12 @@ function Column({ title, children }: { title: string; children: React.ReactNode 
   return (
     <div>
       <p
-        className="text-[11px] font-semibold tracking-[0.18em] uppercase"
-        style={{ color: 'rgb(var(--color-muted))' }}
+        className="text-[11px] font-bold tracking-[0.22em] uppercase"
+        style={{ color: 'rgb(var(--color-primary))' }}
       >
         {title}
       </p>
-      <ul className="mt-4 space-y-2.5 text-sm">{children}</ul>
+      <ul className="mt-5 space-y-3 text-sm">{children}</ul>
     </div>
   )
 }
@@ -189,14 +180,14 @@ function MailRow({ label, addr }: { label: string; addr: string }) {
   return (
     <li className="flex flex-col">
       <span
-        className="text-[10px] tracking-wider uppercase"
+        className="text-[10px] tracking-[0.12em] uppercase"
         style={{ color: 'rgb(var(--color-muted))' }}
       >
         {label}
       </span>
       <a
         href={`mailto:${addr}`}
-        className="text-sm transition-colors hover:underline"
+        className="font-editorial text-[15px] font-bold transition-colors hover:underline"
         style={{ color: 'rgb(var(--color-fg))' }}
       >
         {addr}
@@ -213,26 +204,29 @@ function BottomBar() {
     year: 'numeric',
   })
   return (
-    <div className="border-t" style={{ borderColor: 'rgb(var(--color-rule))' }}>
-      <div
-        className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-6 text-xs lg:flex-row lg:items-center lg:justify-between"
-        style={{ color: 'rgb(var(--color-muted))' }}
-      >
+    <div
+      className="border-t"
+      style={{
+        borderColor: 'rgb(var(--color-rule))',
+        background: 'rgb(var(--color-fg))',
+        color: 'rgb(var(--color-bg))',
+      }}
+    >
+      <div className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-6 text-xs lg:flex-row lg:items-center lg:justify-between">
         <p className="flex items-center gap-2">
           <span
-            className="inline-block h-2 w-2 rounded-full"
-            style={{ background: 'rgb(var(--color-success))' }}
+            className="inline-block h-1.5 w-1.5 rounded-full"
+            style={{ background: 'rgb(var(--color-primary))' }}
             aria-hidden
           />
-          Каталог обновлён · {updated}
+          <span className="tracking-[0.08em] uppercase">Каталог обновлён · {updated}</span>
         </p>
-        <p>
+        <p className="opacity-70">
           © {today.getFullYear()} EDсайдер. Информационный проект — не является образовательной
           организацией.
         </p>
-        <p className="flex items-center gap-1.5">
-          <span aria-hidden>⌘</span>
-          <span>Сделано в&nbsp;России</span>
+        <p className="flex items-center gap-1.5 tracking-[0.08em] uppercase opacity-70">
+          Сделано в&nbsp;России
         </p>
       </div>
     </div>

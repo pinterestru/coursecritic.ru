@@ -25,8 +25,8 @@ export default function AffiliateLink({
       rel="noopener sponsored"
       className="underline decoration-[1.5px] underline-offset-2 transition-colors"
       style={{
-        color: 'rgb(var(--color-primary))',
-        textDecorationColor: 'rgb(var(--color-rule))',
+        color: 'rgb(var(--color-link))',
+        textDecorationColor: 'rgb(var(--color-link) / 0.35)',
       }}
     >
       {children}

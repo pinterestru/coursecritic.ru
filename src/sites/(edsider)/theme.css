@@ -1,19 +1,59 @@
 @layer theme {
   :root {
-    --color-bg: 248 250 252;
-    --color-surface: 255 255 255;
-    --color-fg: 15 23 42;
-    --color-primary: 14 165 233;
-    --color-primary-fg: 255 255 255;
-    --color-muted: 100 116 139;
-    --color-rule: 226 232 240;
-    --color-accent: 245 158 11;
-    --color-success: 16 185 129;
-    --color-danger: 244 63 94;
+    /* Paper-cream editorial palette — warm, readable, distinct from sky-blue SaaS. */
+    --color-bg: 251 247 239; /* #FBF7EF warm paper */
+    --color-surface: 255 255 255; /* #FFFFFF card white */
+    --color-fg: 24 24 22; /* #181816 near-black, slightly warm */
+    --color-muted: 113 107 96; /* #716B60 warm gray */
+    --color-rule: 232 222 203; /* #E8DECB dusty tan */
+    --color-primary: 209 73 42; /* #D1492A burnt coral */
+    --color-primary-fg: 251 247 239;
+    --color-accent: 198 148 62; /* #C6943E gold stars */
+    --color-success: 46 120 76; /* forest */
+    --color-danger: 166 43 43; /* brick red */
   }
 
   body {
     font-family: var(--font-body, ui-sans-serif, system-ui, sans-serif);
+    font-feature-settings: 'ss01', 'cv11', 'cv02';
     -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(
+        circle at 20% -10%,
+        rgb(var(--color-primary) / 0.05) 0%,
+        rgb(var(--color-bg) / 0) 40%
+      ),
+      radial-gradient(
+        circle at 110% 110%,
+        rgb(var(--color-accent) / 0.06) 0%,
+        rgb(var(--color-bg) / 0) 50%
+      );
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  blockquote,
+  .font-editorial {
+    font-family: var(--font-editorial, 'PT Serif', Georgia, serif);
+    font-feature-settings: 'lnum', 'pnum';
+    letter-spacing: -0.01em;
+  }
+
+  /* Decorative section rule — thin + dot accent */
+  .rule-dot {
+    position: relative;
+    border-top: 1px solid rgb(var(--color-rule));
+  }
+  .rule-dot::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgb(var(--color-primary));
   }
 }
