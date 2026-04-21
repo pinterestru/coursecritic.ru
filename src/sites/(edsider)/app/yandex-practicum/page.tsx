@@ -36,7 +36,7 @@ export default function YandexPracticumPage() {
 function Hero() {
   return (
     <section
-      className="border-b"
+      className="border-b "
       style={{
         borderColor: 'rgb(var(--color-rule))',
         background: 'rgb(var(--color-surface))',
