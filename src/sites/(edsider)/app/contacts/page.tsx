@@ -4,14 +4,14 @@ import LegalPage from '../../components/LegalPage'
 
 export const metadata: Metadata = {
   title: 'Контакты',
-  description: 'Как связаться с редакцией EdSider.',
+  description: 'Как связаться с редакцией EDсайдер.',
 }
 
 export default function Page() {
   return (
     <LegalPage title="Контакты" updatedAt="20 апреля 2026">
       <p>
-        EdSider — независимый информационный проект. Мы читаем каждое письмо и отвечаем, даже если
+        EDсайдер — независимый информационный проект. Мы читаем каждое письмо и отвечаем, даже если
         не готовы публиковать что-то.
       </p>
 

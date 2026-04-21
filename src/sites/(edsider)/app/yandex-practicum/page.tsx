@@ -344,7 +344,7 @@ function Reviews() {
               Отзывы студентов
             </h2>
             <p className="mt-2 max-w-2xl text-sm" style={{ color: 'rgb(var(--color-muted))' }}>
-              Подборка из {reviews.length} отзывов, собранных редакцией EdSider. Мы публикуем и
+              Подборка из {reviews.length} отзывов, собранных редакцией EDсайдер. Мы публикуем и
               положительные, и критичные, без редактуры смысла.
             </p>
           </div>

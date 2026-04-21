@@ -1,12 +1,10 @@
 import CourseCard from '../components/CourseCard'
-import Rating from '../components/Rating'
 import { categories, courses } from '../data/practicum-courses'
 
 export default function HomePage() {
   return (
     <main>
       <Hero />
-      <FeaturedSchool />
       <Categories />
       <Catalog />
       <WhyUs />
@@ -34,7 +32,7 @@ function Hero() {
         className="mt-5 max-w-2xl text-lg leading-relaxed"
         style={{ color: 'rgb(var(--color-muted))' }}
       >
-        EdSider — независимый каталог российских IT-школ. Собираем программы, цены, отзывы и читаем
+        EDсайдер — независимый каталог российских IT-школ. Собираем программы, цены, отзывы и читаем
         мелкий шрифт, чтобы выбор был осознанным, а не по картинке в рекламе.
       </p>
       <dl
@@ -59,70 +57,6 @@ function Stat({ label, value }: { label: string; value: string }) {
         {value}
       </dd>
     </div>
-  )
-}
-
-function FeaturedSchool() {
-  return (
-    <section className="mx-auto max-w-6xl px-6 pb-12">
-      <h2
-        className="text-xs font-semibold tracking-wider uppercase"
-        style={{ color: 'rgb(var(--color-muted))' }}
-      >
-        На этой неделе в фокусе
-      </h2>
-      <a
-        href="/yandex-practicum"
-        className="group mt-4 block rounded-2xl border p-6 transition-shadow hover:shadow-lg sm:p-10"
-        style={{
-          borderColor: 'rgb(var(--color-rule))',
-          background: 'rgb(var(--color-surface))',
-        }}
-      >
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-4">
-            <span
-              className="flex h-14 w-14 items-center justify-center rounded-xl text-lg font-extrabold"
-              style={{
-                background: 'rgb(var(--color-fg))',
-                color: 'rgb(var(--color-surface))',
-              }}
-            >
-              ЯП
-            </span>
-            <div>
-              <p
-                className="text-xs tracking-wider uppercase"
-                style={{ color: 'rgb(var(--color-muted))' }}
-              >
-                Онлайн-школа
-              </p>
-              <p className="text-2xl font-bold" style={{ color: 'rgb(var(--color-fg))' }}>
-                Яндекс Практикум
-              </p>
-              <div className="mt-1.5">
-                <Rating value={4.6} count={2840} compact />
-              </div>
-            </div>
-          </div>
-          <div className="sm:text-right">
-            <p
-              className="max-w-md text-sm leading-relaxed"
-              style={{ color: 'rgb(var(--color-muted))' }}
-            >
-              Одна из крупнейших IT-школ рунета. Сильный формат ревью, тренажёр в браузере и центр
-              карьеры для выпускников.
-            </p>
-            <span
-              className="mt-3 inline-block text-sm font-semibold group-hover:underline"
-              style={{ color: 'rgb(var(--color-primary))' }}
-            >
-              Читать подробный обзор →
-            </span>
-          </div>
-        </div>
-      </a>
-    </section>
   )
 }
 
@@ -230,10 +164,10 @@ function Faq() {
   const items = [
     {
       q: 'Вы принадлежите какой-то школе?',
-      a: 'Нет. EdSider — независимый информационный проект. Редакция не входит в состав ни одной из онлайн-школ и не получает платы за место в подборках.',
+      a: 'Нет. EDсайдер — независимый информационный проект. Редакция не входит в состав ни одной из онлайн-школ и не получает платы за место в подборках.',
     },
     {
-      q: 'Можно ли оплатить обучение через EdSider?',
+      q: 'Можно ли оплатить обучение через EDсайдер?',
       a: 'Нет. Мы не принимаем оплату и не заключаем договоры на образовательные услуги. Покупка курса возможна только на сайте самой школы.',
     },
     {

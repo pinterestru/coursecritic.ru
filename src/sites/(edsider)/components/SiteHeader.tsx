@@ -18,33 +18,26 @@ export default function SiteHeader() {
               color: 'rgb(var(--color-primary-fg))',
             }}
           >
-            ES
+            ED
           </span>
           <span
             className="text-lg font-bold tracking-tight"
             style={{ color: 'rgb(var(--color-fg))' }}
           >
-            EdSider
+            EDсайдер
           </span>
         </Link>
         <nav className="flex items-center gap-6 text-sm">
           <Link
-            href="/yandex-practicum"
-            className="font-medium hover:underline"
-            style={{ color: 'rgb(var(--color-fg))' }}
-          >
-            Школы
-          </Link>
-          <Link
             href="/about"
-            className="hidden hover:underline sm:inline"
+            className="hover:underline"
             style={{ color: 'rgb(var(--color-muted))' }}
           >
             О проекте
           </Link>
           <Link
             href="/contacts"
-            className="hidden hover:underline sm:inline"
+            className="hover:underline"
             style={{ color: 'rgb(var(--color-muted))' }}
           >
             Контакты
