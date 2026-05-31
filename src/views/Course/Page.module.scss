@@ -1,0 +1,69 @@
+@use "../../styles/scss/variables" as vars;
+
+.product-page {
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  @media (max-width: vars.$small-screen) {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+}
+
+.main-panel {
+  width: 100%;
+  max-width: 70%;
+  @media (max-width: vars.$small-screen) {
+    max-width: 100%;
+  }
+  @media (max-width: vars.$medium-screen) {
+    max-width: 100%;
+  }
+}
+
+.product {
+  width: 100%;
+  text-align: left;
+}
+
+.widget {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 30px;
+}
+
+.side-panel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 30%;
+  padding-left: 40px;
+  @media (max-width: vars.$small-screen) {
+    max-width: 100%;
+    padding-left: 0;
+  }
+  @media (max-width: vars.$medium-screen) {
+    display: none;
+  }
+}
+
+.side-form {
+  margin-bottom: 100px;
+}
+
+.side-title {
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.review-item {
+  box-shadow: var(--container-shadow-small);
+  border-radius: 5px;
+  padding: 15px 24px;
+  margin-bottom: 40px;
+}

@@ -1,0 +1,12 @@
+@use "../../styles/scss/variables" as vars;
+
+
+.tabs-container {
+
+}
+
+.tabs {
+  width: 100%;
+  background-color: var(--background-light-color);
+  display: flex;
+}

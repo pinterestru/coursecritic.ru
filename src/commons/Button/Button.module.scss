@@ -1,0 +1,138 @@
+@use "../../styles/scss/variables" as vars;
+
+button.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-color);
+  opacity: 0.9;
+  //transform: var(--button-transform;
+  padding: var(--button-padding);
+  border: 2px solid transparent;
+  cursor: pointer;
+  box-shadow: var(--button-box-shadow);
+  border-radius: var(--button-border-radius);
+  transition: box-shadow 0.5s;
+  text-transform: uppercase;
+  
+
+  @media (max-width: vars.$small-screen) {
+    padding: var(--button-padding-small);
+  }
+
+  &:hover {
+    background: var(--primary-color);
+    box-shadow: var(--container-shadow-large);
+  }
+
+  > span {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: var(--button-font-size);
+    line-height: var(--button-line-height);
+  }
+
+  &.outlined {
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    > span {
+      color: var(--text-color);
+    }
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  &.secondary {
+    background-color: var(--secondary-color);
+    > span {
+      color: white;
+    }
+    &:hover {
+      background-color: var(--secondary-color);
+    }
+  }
+  &.secondary.outlined {
+    border: 2px solid var(--secondary-color);
+    background-color: transparent;
+    > span {
+      color: var(--secondary-color);
+    }
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  &.disabled {
+    background-color: var(--background-disabled-color);
+    cursor: default;
+    > span {
+      color: var(--disabled-color);
+    }
+    &:hover {
+      box-shadow: none;
+    }
+  }
+  &.disabled.outlined {
+    border: 2px solid var(--disabled-color);
+    background-color: transparent;
+    cursor: default;
+    > span {
+      color: var(--disabled-color);
+    }
+  }
+}
+
+button.button.small {
+  padding: var(--button-padding-small);
+  > span {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+button.button.large {
+  padding: var(--button-padding-large);
+}
+
+button.full-width {
+  width: 100%;
+}
+
+// Animations
+button.button.border-animation {
+  box-shadow: 0 0 0px 0px var(--primary-color);
+  animation: 2s border-animation infinite forwards;
+
+  &:hover {
+    animation: none;
+  }
+}
+
+@keyframes border-animation {
+  50% {
+    box-shadow: 0 0 0px 2px var(--primary-color);
+  }
+}
+
+button.button.resize-animation {
+  animation-name: resize-animation;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+button.button.resize-animation:hover {
+  animation-name: unset;
+}
+
+@keyframes resize-animation {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,188 @@
+@use "../../styles/scss/variables" as vars;
+
+.item-gallery {
+  position: relative;
+}
+
+.header {
+  height: 50px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+  @media (max-width: vars.$small-screen) {
+    margin-bottom: 0;
+  }
+  .label-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    @media (max-width: vars.$small-screen) {
+      font-size: 18px;
+    }
+  }
+}
+
+
+.item {
+  list-style: none;
+  padding-left: 0;
+}
+
+
+.horizontal {
+  .box-shadow-right {
+    @media (min-width: vars.$small-screen) {
+      right: -61px;
+      -webkit-box-shadow: -20px 0 30px -20px rgba(0, 0, 0, 0.3);
+      box-shadow: -20px 0 30px -20px rgba(0, 0, 0, 0.3);
+      position: absolute;
+      z-index: 1;
+      top: 20px;
+      bottom: 0;
+      display: none;
+      width: 60px;
+      display: block;
+      height: 100%;
+    }
+  }
+  .box-shadow-left {
+    @media (min-width: vars.$small-screen) {
+      left: -61px;
+      -webkit-box-shadow: 20px 0 30px -20px rgba(0, 0, 0, 0.3);
+      box-shadow: 20px 0 30px -20px rgba(0, 0, 0, 0.3);
+      position: absolute;
+      z-index: 1;
+      top: 20px;
+      bottom: 0;
+      display: none;
+      width: 60px;
+      display: block;
+      height: 100%;
+    }
+  }
+  .body {
+    @media (min-width: vars.$small-screen) {
+      overflow-x: auto;
+    }
+  }
+  .body-container {
+    @media (min-width: vars.$small-screen) {
+      display: flex;
+      margin-left: -10px;
+      margin-right: -10px;
+      margin-top: -10px;
+    }
+  }
+  .item {
+    @media (min-width: vars.$small-screen) {
+      width: 250px !important;
+      min-width: 250px !important;
+      padding: 10px;
+    }
+  }
+}
+
+.mobile-horizontal {
+  .body {
+    @media (max-width: vars.$small-screen) {
+      overflow-x: auto;
+    }
+    @media (min-width: vars.$small-screen) {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  }
+  .body-container {
+    @media (max-width: vars.$small-screen) {
+      width: 100%;
+      display: flex;
+      padding-left: 10px;
+    }
+  }
+  .item {
+    @media (max-width: vars.$small-screen) {
+      width: 250px !important;
+      min-width: 250px !important;
+      padding: 0px;
+      margin: 5px;
+    }
+  }
+}
+
+.vertical {
+  .body-container {
+    @media (min-width: vars.$small-screen) {
+      //display: flex;
+      //flex-wrap: wrap;
+      //margin-left: -10px;
+      //margin-right: -10px;
+      //margin-top: -10px;
+      
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      grid-gap: 32px 24px;
+
+    }
+    &.columns-2 {
+      @media (min-width: vars.$small-screen) {
+        grid-template-columns: repeat(2,1fr);
+      }
+    }
+    &.columns-4 {
+      @media (min-width: vars.$small-screen) {
+        grid-template-columns: repeat(4,1fr);
+      }
+    }
+    &.columns-5 {
+      @media (min-width: vars.$small-screen) {
+        grid-template-columns: repeat(5,1fr);
+      }
+    }
+    @media (max-width: 900px) {
+      grid-template-columns: repeat(3,1fr) !important;
+    }
+    @media (max-width: 700px) {
+      grid-template-columns: repeat(2,1fr) !important;
+    }
+  }
+  .item {
+    @media (min-width: vars.$small-screen) {
+      padding: 0px;
+      width: auto !important;
+      min-width: auto !important;
+    }
+  }
+}
+
+.mobile-vertical {
+  .body {
+    @media (min-width: vars.$small-screen) {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  }
+  .body-container {
+    @media (max-width: vars.$small-screen) {
+      display: grid;
+      grid-template-columns: repeat(1,1fr) !important;
+      grid-gap: 32px 24px;
+    }
+    &.mobile-columns-2 {
+      @media (max-width: vars.$small-screen) {
+        grid-template-columns: repeat(2,1fr) !important;
+        grid-gap: 10px 10px;
+      }
+    }
+  }
+  .item {
+    @media (max-width: vars.$small-screen) {
+      padding: 0px;
+      width: auto !important;
+      min-width: auto !important;
+    }
+  }
+}
+

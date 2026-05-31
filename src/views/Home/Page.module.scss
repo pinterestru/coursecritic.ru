@@ -1,0 +1,58 @@
+@use "../../styles/scss/variables" as vars;
+
+.home-page {
+  margin-bottom: 100px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: vars.$small-screen) {
+    flex-direction: column;
+  }
+}
+
+.title {
+  padding-top: 100px;
+  padding-bottom: 10px;
+}
+
+
+.section-title {
+    font-size: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    @media (max-width: vars.$small-screen) {
+      font-size: 22px;
+    }
+}
+
+
+.gallery {
+    margin-top: 40px;
+}
+
+
+.product-section {
+    display: flex;
+    flex-direction: column;
+    margin-top: 80px;
+    h2 {
+        margin-bottom: 35px;
+        @media (max-width: vars.$small-screen) {
+          margin-bottom: 20px;
+        }
+    }
+}
+
+
+.banner-container {
+    background-color: var(--banner-background-color);
+    background-blend-mode: multiply;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+}

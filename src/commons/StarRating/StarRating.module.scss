@@ -1,0 +1,18 @@
+
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.container svg {
+    fill: #e3e3e3;
+}
+
+.fill svg {
+    fill: #02865e !important;
+}
+
+.item {
+    margin-right: 2px;
+    display: flex;
+}

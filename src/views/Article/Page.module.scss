@@ -1,0 +1,39 @@
+
+
+.article-page {
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.article {
+  width: 100%;
+  text-align: left;
+}
+
+.widget {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  scroll-margin-top: 200px;
+}
+
+.comment-box {
+  margin-top: 50px;
+  width: 100%;
+}
+
+.title {
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.comment-icon {
+  margin-left: 10px;
+}

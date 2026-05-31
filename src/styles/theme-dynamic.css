@@ -1,0 +1,103 @@
+:root {
+  --gray-dark: #7d7d7d;
+  --gray-light: #f6f6f6;
+  --white: #fff;
+  --blue-dark: #190c4e;
+  --blue: #21125e;
+  --red-color: #b40f0f;
+  --green-color: rgb(1, 112, 1);
+
+  --font-size: 1rem;
+  --font-size-small: 0.875rem;
+  --line-height: 1.25rem;
+  --font-size-h1: 40px;
+  --line-height-h1: 1;
+  --font-size-h2: 28px;
+  --line-height-h2: 36px;
+  --font-size-h3: 1.5rem;
+  --line-height-h3: 1.8rem;
+  --font-size-h4: 1.125rem;
+  --line-height-h4: 1.4rem;
+  --font-weight-bold: 700;
+
+  --padding: 20px;
+
+  --spacer: 1rem;
+
+  --border-radius: 5px;
+
+  --button-font-size: 16px;
+  --button-line-height: 18px;
+  --button-box-shadow: none;
+  --button-padding: 8px 20px;
+  --button-padding-small: 5px 15px;
+  --button-padding-large: 10px 25px;
+  --button-text-transform: uppercase;
+  --button-font-weight: 500;
+  --button-border-radius: 30px;
+
+  --medium-screen: 992px;
+  --small-screen: 540px;
+
+  --container-width: 1140px;
+  --container-shadow-small: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 2px 0 rgba(0, 0, 0, .12);
+  --container-shadow-medium: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+  --container-shadow-large: 0px 3px 3px -2px rgb(0 0 0 / 20%),
+    0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
+
+  --card-border-radius: 0.5rem;
+  --card-box-shadow: none;
+}
+:root {
+  --primary-color: #7d19a0;
+  --secondary-color: rgb(34, 46, 100);
+  --disabled-color: rgba(0, 0, 0, 0.26);
+  --title-color: rgb(36, 36, 36);
+  --subtitle-color: rgb(59,59,59);
+  --text-color: #242424;
+  --text-light-color: #6b7487;
+  --text-dark-color: black;
+  --background-color: #fff;
+  --background-light-color: #fbfafe;
+  --background-lightest-color: white;
+  --background-dark-color: #f0e7fd;
+  --background-disabled-color: rgba(0, 0, 0, 0.12);
+  --border-color: #edeff4;
+  --border-dark-color: #c4c4c4;
+  --link-color: #006aaf;
+  --header-color: #fff;
+
+  --card-background-color: white;
+  --card-border-color: red;
+  --card-text-color: #7d47a7;
+
+  --card-background-color2: #f0e7fd;
+  --card-border-color2: #dfe3eb;
+  --card-background-light-color2: #fbfafe;
+  --card-text-color2: #7d47a7;
+
+  --card-background-color3: #e3f4df;
+  --card-border-color3: #dfe3eb;
+  --card-background-light-color3: #fbfafe;
+  --card-text-color3: #bd548c;
+
+  --card-background-color4: #fbd4d3;
+  --card-border-color4: #dfe3eb;
+  --card-text-color4: #bd548c;
+  --card-border: 1px solid #dfe3eb;
+
+  --footer-background-color: #fbfafe;
+
+  --body-background-color: white;
+
+  --section-background-color: #fbfafe;
+  --section-box-shadow: inset 0 -5px 22px -15px #d5d5d5;
+  
+
+  --header-background-color: white;
+  --header-height: 60px;
+  --header-border: 1px solid #eee;
+
+  --banner-background-color: #f7f2ff;
+}

@@ -1,0 +1,109 @@
+@use "../../styles/scss/variables" as vars;
+
+.dialog {
+  position: fixed;
+  z-index: 1300;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family);
+}
+
+.backdrop {
+  z-index: -1;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.backdrop.dark {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.box {
+  width: 100%;
+  height: 100%;
+  background-color: var(--background-color);
+  color: rgba(0, 0, 0, 0.87);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 11px 15px -7px,
+    rgb(0 0 0 / 14%) 0px 24px 38px 3px, rgb(0 0 0 / 12%) 0px 9px 46px 8px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100% - 64px);
+  margin: 32px;
+  outline: none;
+  @media (max-width: vars.$small-screen) {
+    max-height: calc(100% - 32px);
+    margin: 16px;
+  }
+}
+
+.box.fullscreen-mobile {
+  @media (max-width: vars.$small-screen) {
+    margin: 0;
+    border-radius: 0;
+    max-height: 100%;
+  }
+}
+
+.box.fullscreen {
+  margin: 0;
+  border-radius: 0;
+  max-height: 100%;
+}
+
+.box.xs {
+  max-width: 444px;
+}
+
+.box.sm {
+  max-width: 600px;
+}
+
+.box.md {
+  max-width: 860px;
+}
+
+.box.lg {
+  max-width: 1280px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px 5px var(--padding);
+}
+.header.header-divider {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.content {
+  width: 100%;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  max-width: 100%;
+}
+.content.content-dividers {
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+.content.content-padding {
+  padding: var(--padding);
+}
+
+.actions {
+  display: flex;
+}

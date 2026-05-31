@@ -1,0 +1,43 @@
+
+
+.parser-page {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+  margin-bottom: 150px;
+}
+
+.form {
+  width: 100%;
+  max-width: 500px;
+  padding: var(--padding);
+}
+
+
+.fields {
+  display: flex;
+  flex-direction: column;
+}
+
+.field {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.divider {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.error {
+  color: var(--red-color);
+  margin-top: 15px;
+}
