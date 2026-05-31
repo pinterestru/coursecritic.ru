@@ -1,0 +1,27 @@
+@layer theme {
+  :root {
+    /* Pale sage + forest green — a cooler, bookish palette that
+       distinguishes coursecritic from edsider's warm paper. */
+    --color-bg: 235 240 227;          /* #EBF0E3 pale sage */
+    --color-fg: 31 36 25;              /* #1F2419 forest ink */
+    --color-primary: 74 107 59;        /* #4A6B3B deep forest */
+    --color-primary-fg: 235 240 227;
+    --color-muted: 108 116 95;         /* #6C745F sage gray */
+    --color-rule: 200 210 185;         /* #C8D2B9 pale sage rule */
+    --color-link: 30 91 168;           /* #1E5BA8 classic readable blue for inline links */
+  }
+
+  body {
+    font-family: var(--font-body, ui-sans-serif, system-ui, sans-serif);
+    font-feature-settings: 'ss01', 'cv11';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  blockquote {
+    font-family: var(--font-serif, Georgia, 'PT Serif', serif);
+  }
+}
