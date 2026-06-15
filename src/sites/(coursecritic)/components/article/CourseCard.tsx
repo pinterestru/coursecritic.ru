@@ -22,7 +22,16 @@ export default function CourseCard({ course }: { course: Course }) {
             </p>
           )}
           <h2 className="font-serif text-2xl leading-snug font-semibold sm:text-[28px]">
-            {rank}. {provider}
+            {rank}.{' '}
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener sponsored"
+              className="underline decoration-1 underline-offset-[3px] transition-opacity hover:opacity-80"
+              style={{ color: 'inherit', textDecorationColor: 'rgb(var(--color-link) / 0.35)' }}
+            >
+              {provider}
+            </a>
           </h2>
           <p className="mt-1 text-lg italic" style={{ color: 'rgb(var(--color-muted))' }}>
             {headline}

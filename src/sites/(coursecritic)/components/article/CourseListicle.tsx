@@ -19,6 +19,9 @@ export default function CourseListicle({ article }: { article: Article }) {
     { id: 'match', label: article.matchHeading },
   ]
 
+  // Affiliate URL per provider, so the recap can link each school too.
+  const urlByProvider = new Map(article.courses.map((c) => [c.provider, c.url]))
+
   return (
     <>
       <ReadingProgress />
@@ -162,7 +165,22 @@ export default function CourseListicle({ article }: { article: Article }) {
                         →
                       </span>
                       <span>
-                        <strong>{m.provider}</strong> — {m.text}
+                        <strong>
+                          {urlByProvider.has(m.provider) ? (
+                            <a
+                              href={urlByProvider.get(m.provider)}
+                              target="_blank"
+                              rel="noopener sponsored"
+                              className="underline underline-offset-2"
+                              style={{ color: 'rgb(var(--color-link))' }}
+                            >
+                              {m.provider}
+                            </a>
+                          ) : (
+                            m.provider
+                          )}
+                        </strong>{' '}
+                        — {m.text}
                       </span>
                     </li>
                   ))}
