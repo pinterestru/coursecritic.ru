@@ -165,6 +165,21 @@ function activate(siteId, { incremental = false } = {}) {
   cpSync(resolve(siteDir, 'public'), publicDest, copyOpts)
   generatedPaths.push('public')
 
+  // Shared cross-site overlay (src/sites/_shared) — routes/components/public
+  // that every site gets (e.g. the /click affiliate redirect). Copied AFTER the
+  // active site with force:false, so a site's own files win on any path
+  // collision and shared-only files are added on top.
+  const sharedDir = resolve(ROOT, 'src/sites/_shared')
+  const overlayShared = (sub, dest, pathLabel) => {
+    const from = resolve(sharedDir, sub)
+    if (!existsSync(from)) return
+    cpSync(from, dest, { recursive: true, force: false, errorOnExist: false })
+    if (!generatedPaths.includes(pathLabel)) generatedPaths.push(pathLabel)
+  }
+  overlayShared('app', appDest, 'src/app')
+  overlayShared('components', resolve(ROOT, 'src/components'), 'src/components')
+  overlayShared('public', publicDest, 'public')
+
   // theme + generated config (single files — overwrite is always safe)
   cpSync(resolve(siteDir, 'theme.css'), activeThemeFile, { force: true })
   generatedPaths.push('src/styles/active-theme.css')
@@ -217,10 +232,15 @@ function main() {
       }, 80)
     }
 
+    const sharedDir = resolve(ROOT, 'src/sites/_shared')
     for (const subdir of ['app', 'components', 'public']) {
       const target = join(siteDir, subdir)
       if (existsSync(target)) {
         watch(target, { recursive: true }, scheduleSync)
+      }
+      const sharedTarget = join(sharedDir, subdir)
+      if (existsSync(sharedTarget)) {
+        watch(sharedTarget, { recursive: true }, scheduleSync)
       }
     }
     watch(join(siteDir, 'theme.css'), scheduleSync)
