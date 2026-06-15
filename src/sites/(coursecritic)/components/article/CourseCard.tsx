@@ -5,7 +5,7 @@ import type { Course } from './types'
 // likes/dislikes, an optional savings aside and an inline affiliate link.
 // Deliberately not a boxed "product card": this is a blog post, not a landing page.
 export default function CourseCard({ course }: { course: Course }) {
-  const { rank, provider, headline, url, duration, price, guarantee, body, pros, cons, verdict, save, best, icon } =
+  const { rank, provider, headline, url, duration, price, guarantee, body, pros, cons, verdict, save, icon } =
     course
 
   const meta = [duration, price, guarantee ? 'есть гарантия возврата' : 'без гарантии возврата'].filter(
@@ -16,13 +16,8 @@ export default function CourseCard({ course }: { course: Course }) {
     <section id={`course-${rank}`} className="mt-14 scroll-mt-24">
       <div className="flex items-start gap-5">
         <div className="min-w-0 flex-1">
-          {best && (
-            <p className="mb-1 text-sm italic" style={{ color: 'rgb(var(--color-primary))' }}>
-              Мой выбор из списка
-            </p>
-          )}
-          <h2 className="font-serif text-2xl leading-snug font-semibold sm:text-[28px]">
-            {rank}.{' '}
+          <RankBadge rank={rank} />
+          <h2 className="mt-3 font-serif text-2xl leading-snug font-semibold sm:text-[28px]">
             <a
               href={url}
               target="_blank"
@@ -102,6 +97,38 @@ export default function CourseCard({ course }: { course: Course }) {
         </a>
       </p>
     </section>
+  )
+}
+
+// Top three get an emphasised "ТОП-N" badge (#1 solid, #2–#3 tinted);
+// the rest get a quiet "№N" marker without the ТОП wording.
+function RankBadge({ rank }: { rank: number }) {
+  const base =
+    'inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide uppercase'
+
+  if (rank <= 3) {
+    const solid = rank === 1
+    return (
+      <span
+        className={base}
+        style={
+          solid
+            ? { background: 'rgb(var(--color-primary))', color: 'rgb(var(--color-primary-fg))' }
+            : { background: 'rgb(var(--color-primary) / 0.12)', color: 'rgb(var(--color-primary))' }
+        }
+      >
+        ТОП-{rank}
+      </span>
+    )
+  }
+
+  return (
+    <span
+      className={base}
+      style={{ border: '1px solid rgb(var(--color-rule))', color: 'rgb(var(--color-muted))' }}
+    >
+      №{rank}
+    </span>
   )
 }
 
