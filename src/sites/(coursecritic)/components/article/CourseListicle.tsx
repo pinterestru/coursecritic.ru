@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import Logo from '../Logo'
 import CourseCard from './CourseCard'
 import ReadingProgress from './ReadingProgress'
+import { REVIEWS } from './reviews'
 import TableOfContents from './TableOfContents'
 import type { Article } from './types'
 
@@ -110,44 +111,71 @@ export default function CourseListicle({ article }: { article: Article }) {
               <div id="compare" className="mt-14 scroll-mt-24">
                 <Heading>Коротко — в одной таблице</Heading>
                 <p className="-mt-2 text-[15px]" style={{ color: 'rgb(var(--color-muted))' }}>
-                  Чтобы не листать туда-сюда: срок, цена и есть ли возврат денег, если работу не
-                  найдёте. Название — ссылка на разбор ниже.
+                  Чтобы не листать туда-сюда: место в подборке, срок, цена и рейтинг на независимом
+                  сервисе отзывов. Название — ссылка на разбор ниже.
                 </p>
                 <div className="mt-5 overflow-x-auto">
                   <table className="w-full border-collapse text-left text-[15px]">
                     <thead>
                       <tr style={{ color: 'rgb(var(--color-muted))' }}>
-                        <th className="py-2 pr-3 text-xs font-medium tracking-wide uppercase">Курс</th>
+                        <th className="w-8 py-2 pr-2 text-xs font-medium tracking-wide uppercase">#</th>
+                        <th className="px-3 py-2 text-xs font-medium tracking-wide uppercase">Курс</th>
                         <th className="px-3 py-2 text-xs font-medium tracking-wide uppercase">Срок</th>
                         <th className="px-3 py-2 text-xs font-medium tracking-wide uppercase">Цена</th>
-                        <th className="py-2 pl-3 text-center text-xs font-medium tracking-wide uppercase">
-                          Возврат
-                        </th>
+                        <th className="py-2 pl-3 text-xs font-medium tracking-wide uppercase">Отзывы</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {article.courses.map((c) => (
-                        <tr key={c.rank} style={{ borderTop: '1px solid rgb(var(--color-rule))' }}>
-                          <td className="py-2.5 pr-3">
-                            <a
-                              href={`#course-${c.rank}`}
-                              className="no-underline hover:underline"
-                              style={{ color: 'rgb(var(--color-fg))' }}
+                      {article.courses.map((c) => {
+                        const review = REVIEWS[c.provider]
+                        return (
+                          <tr key={c.rank} style={{ borderTop: '1px solid rgb(var(--color-rule))' }}>
+                            <td
+                              className="py-2.5 pr-2 font-serif font-semibold tabular-nums"
+                              style={{ color: 'rgb(var(--color-primary))' }}
                             >
-                              {c.provider}
-                            </a>
-                          </td>
-                          <td className="px-3 py-2.5 whitespace-nowrap" style={{ color: 'rgb(var(--color-muted))' }}>
-                            {c.duration}
-                          </td>
-                          <td className="px-3 py-2.5 whitespace-nowrap" style={{ color: 'rgb(var(--color-muted))' }}>
-                            {c.price}
-                          </td>
-                          <td className="py-2.5 pl-3 text-center" style={{ color: 'rgb(var(--color-muted))' }}>
-                            {c.guarantee ? '✓' : '—'}
-                          </td>
-                        </tr>
-                      ))}
+                              {c.rank}
+                            </td>
+                            <td className="px-3 py-2.5">
+                              <a
+                                href={`#course-${c.rank}`}
+                                className="no-underline hover:underline"
+                                style={{ color: 'rgb(var(--color-fg))' }}
+                              >
+                                {c.provider}
+                              </a>
+                            </td>
+                            <td
+                              className="px-3 py-2.5 whitespace-nowrap"
+                              style={{ color: 'rgb(var(--color-muted))' }}
+                            >
+                              {c.duration}
+                            </td>
+                            <td
+                              className="px-3 py-2.5 whitespace-nowrap"
+                              style={{ color: 'rgb(var(--color-muted))' }}
+                            >
+                              {c.price}
+                            </td>
+                            <td className="py-2.5 pl-3 whitespace-nowrap">
+                              {review ? (
+                                <a
+                                  href={review.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="underline underline-offset-2"
+                                  style={{ color: 'rgb(var(--color-link))' }}
+                                  title={`${review.count} отзывов · ${review.source ?? 'iRecommend'}`}
+                                >
+                                  ★ {review.rating.toFixed(1)}
+                                </a>
+                              ) : (
+                                <span style={{ color: 'rgb(var(--color-muted))' }}>—</span>
+                              )}
+                            </td>
+                          </tr>
+                        )
+                      })}
                     </tbody>
                   </table>
                 </div>
