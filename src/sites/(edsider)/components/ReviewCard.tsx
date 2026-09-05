@@ -1,4 +1,4 @@
-import type { Review } from '../data/practicum-reviews'
+import type { Review } from '../data/brands/practicum'
 
 import Rating from './Rating'
 

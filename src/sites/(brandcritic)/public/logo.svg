@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 216 40" width="216" height="40" role="img" aria-label="BrandCritic">
+  <rect y="4" width="32" height="32" rx="4" fill="#C6F02A"/>
+  <rect x="6" y="21" width="3.5" height="9" fill="#0C0E12"/>
+  <rect x="11.5" y="16" width="3.5" height="14" fill="#0C0E12"/>
+  <rect x="17" y="11" width="3.5" height="19" fill="#0C0E12"/>
+  <rect x="22.5" y="11" width="1.8" height="19" fill="#0C0E12" opacity="0.35"/>
+  <text x="42" y="27" font-family="'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif" font-size="20" font-weight="700" fill="#F0F3F7" letter-spacing="-0.6">Brand</text>
+  <text x="103" y="27" font-family="'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif" font-size="20" font-weight="700" fill="#C6F02A" letter-spacing="-0.6">Critic</text>
+</svg>

@@ -1,28 +1,59 @@
-# Minimal Nginx config for Certbot SSL certificate request
-# Domain: coursecritic.ru
+# Bootstrap Nginx config for the first Certbot certificate request.
+# Domain: promoyeti.com
 #
-# Usage:
-# 1. Copy to /etc/nginx/sites-available/coursecritic.ru
-# 2. ln -s /etc/nginx/sites-available/coursecritic.ru /etc/nginx/sites-enabled/
-# 3. nginx -t && systemctl reload nginx
-# 4. sudo certbot certonly --webroot -w /var/www/certbot -d coursecritic.ru -d www.coursecritic.ru -m you@example.com --agree-tos --no-eff-email
-# 5. After certs obtained, replace with full nginx.conf.coursecritic
+# This exists to solve a chicken-and-egg problem: nginx.conf.promoyeti listens
+# on 443 and references /etc/letsencrypt/live/promoyeti.com/, so nginx refuses
+# to start until that certificate exists — and Certbot cannot obtain it without
+# a server already answering on port 80. This config answers on port 80 only,
+# serves the ACME challenge, and is then thrown away.
+#
+# Usage on the host:
+#
+#   1. Point promoyeti.com and www.promoyeti.com at this server (A/AAAA records)
+#      and wait for DNS to resolve. Check with:
+#        dig +short promoyeti.com
+#
+#   2. Create the challenge webroot:
+#        sudo mkdir -p /var/www/certbot
+#
+#   3. Install this config and reload:
+#        sudo cp nginx.conf.certbot /etc/nginx/sites-available/promoyeti.com
+#        sudo ln -s /etc/nginx/sites-available/promoyeti.com \
+#                   /etc/nginx/sites-enabled/promoyeti.com
+#        sudo nginx -t && sudo systemctl reload nginx
+#
+#   4. Request the certificate. Use a mailbox that ALREADY WORKS — expiry
+#      warnings go there, and hello@promoyeti.com does not exist yet:
+#        sudo certbot certonly --webroot -w /var/www/certbot \
+#          -d promoyeti.com -d www.promoyeti.com \
+#          -m <a-mailbox-you-actually-read> --agree-tos --no-eff-email
+#
+#      Add --dry-run first if you want to rehearse it. Let's Encrypt rate-limits
+#      failed attempts per domain, so a dry run is cheap insurance.
+#
+#   5. Swap in the real config, which serves 443 and proxies to the app:
+#        sudo cp nginx.conf.promoyeti /etc/nginx/sites-available/promoyeti.com
+#        sudo nginx -t && sudo systemctl reload nginx
+#
+# Renewals need no further action: nginx.conf.promoyeti keeps the same
+# /.well-known/acme-challenge/ location pointing at /var/www/certbot, so the
+# certbot timer can renew against the live site.
 
 server {
     listen 80;
     listen [::]:80;
-    server_name coursecritic.ru www.coursecritic.ru;
+    server_name promoyeti.com www.promoyeti.com;
 
-    # Webroot for ACME challenge
+    # Webroot for the ACME challenge.
     root /var/www/certbot;
 
-    # ACME challenge location
     location /.well-known/acme-challenge/ {
         root /var/www/certbot;
         allow all;
     }
 
-    # Temporary: return 200 for all other requests
+    # Everything else: a holding message rather than a 404, so a visitor or an
+    # uptime check hitting the domain mid-setup gets something coherent.
     location / {
         return 200 'Server is being configured. Please wait...';
         add_header Content-Type text/plain;

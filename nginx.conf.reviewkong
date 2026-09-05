@@ -1,0 +1,146 @@
+# Nginx config for reviewkong.com → site-ui (SITE_CONFIG=reviewkong) on 127.0.0.1:3009
+#
+# Before first deploy: point reviewkong.com (and www) at this host, then issue
+# the Let's Encrypt certificate — the ssl_certificate paths below assume
+# /etc/letsencrypt/live/reviewkong.com/ already exists, so nginx will refuse to
+# start without it. `SITE.domain` in src/sites/(reviewkong)/data/site.ts must
+# stay in sync with the server_name here.
+#
+# Deploy:
+#   sudo cp nginx.conf.reviewkong /etc/nginx/sites-available/reviewkong.com
+#   sudo ln -s /etc/nginx/sites-available/reviewkong.com /etc/nginx/sites-enabled/reviewkong.com
+#   sudo nginx -t && sudo systemctl reload nginx
+
+upstream reviewkong_upstream {
+    server 127.0.0.1:3009 max_fails=3 fail_timeout=30s;
+    keepalive 32;
+}
+
+# HTTP → HTTPS
+server {
+    listen 80;
+    listen [::]:80;
+    server_name reviewkong.com www.reviewkong.com;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://reviewkong.com$request_uri;
+    }
+}
+
+# HTTPS
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    server_name reviewkong.com www.reviewkong.com;
+
+    if ($host = www.reviewkong.com) {
+        return 301 https://reviewkong.com$request_uri;
+    }
+
+    ssl_certificate     /etc/letsencrypt/live/reviewkong.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/reviewkong.com/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/reviewkong.com/chain.pem;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;
+    ssl_prefer_server_ciphers off;
+    ssl_session_cache shared:SSL_reviewkong:10m;
+    ssl_session_timeout 1d;
+    ssl_session_tickets off;
+    ssl_stapling on;
+    ssl_stapling_verify on;
+    resolver 1.1.1.1 8.8.8.8 valid=300s;
+    resolver_timeout 5s;
+
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+
+    gzip on;
+    gzip_vary on;
+    gzip_comp_level 6;
+    gzip_min_length 1000;
+    gzip_types text/plain text/css application/javascript application/json image/svg+xml
+               application/xml+rss application/atom+xml application/manifest+json;
+
+    client_max_body_size 10M;
+    client_body_timeout 30;
+    client_header_timeout 30;
+    send_timeout 30;
+
+    location /_next/static/ {
+        proxy_pass http://reviewkong_upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header Connection "";
+        add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+
+    location /_next/image {
+        proxy_pass http://reviewkong_upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header Connection "";
+        add_header Cache-Control "public, max-age=3600, s-maxage=86400, stale-while-revalidate=86400";
+        add_header Vary "Accept" always;
+    }
+
+    location /api/ {
+        proxy_pass http://reviewkong_upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header Connection "";
+        proxy_buffering off;
+        proxy_request_buffering off;
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+    }
+
+    location = /api/health {
+        proxy_pass http://reviewkong_upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header Connection "";
+        access_log off;
+        proxy_read_timeout 5s;
+        proxy_connect_timeout 5s;
+    }
+
+    location / {
+        proxy_pass http://reviewkong_upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header Connection "";
+        proxy_set_header Next-Action $http_next_action;
+        proxy_set_header Next-Router-State-Tree $http_next_router_state_tree;
+        proxy_set_header RSC $http_rsc;
+        proxy_buffering off;
+        proxy_request_buffering off;
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
+
+    location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }
+
+    access_log /var/log/nginx/reviewkong.com-access.log combined buffer=32k flush=5m;
+    error_log  /var/log/nginx/reviewkong.com-error.log warn;
+}

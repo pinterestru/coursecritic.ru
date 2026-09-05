@@ -5,8 +5,8 @@ import AffiliateLink from '../../components/AffiliateLink'
 import CourseCard from '../../components/CourseCard'
 import Rating from '../../components/Rating'
 import ReviewCard from '../../components/ReviewCard'
-import { categoriesOrder, courses as allCourses } from '../../data/practicum-courses'
-import { reviews } from '../../data/practicum-reviews'
+import { categoriesOrder, courses as allCourses } from '../../data/home'
+import { practicum, reviews } from '../../data/brands/practicum'
 
 const courses = allCourses.filter((c) => c.schoolId === 'practicum')
 const categories = categoriesOrder.filter((cat) => courses.some((c) => c.category === cat))
@@ -36,7 +36,7 @@ export default function YandexPracticumPage() {
 function Hero() {
   return (
     <section
-      className="border-b "
+      className="border-b"
       style={{
         borderColor: 'rgb(var(--color-rule))',
         background: 'rgb(var(--color-surface))',
@@ -52,7 +52,7 @@ function Hero() {
             Главная
           </Link>
           <span className="mx-2">/</span>
-          <span>Яндекс Практикум</span>
+          <span>{practicum.name}</span>
         </nav>
 
         <div className="mt-6 flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
@@ -64,20 +64,20 @@ function Hero() {
                 color: 'rgb(var(--color-surface))',
               }}
             >
-              ЯП
+              {practicum.badge}
             </span>
             <div>
               <p
                 className="text-xs font-semibold tracking-wider uppercase"
                 style={{ color: 'rgb(var(--color-primary))' }}
               >
-                Онлайн-школа · Россия
+                Онлайн-школа · {practicum.region}
               </p>
               <h1
                 className="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl"
                 style={{ color: 'rgb(var(--color-fg))' }}
               >
-                Яндекс Практикум
+                {practicum.name}
               </h1>
               <div className="mt-3">
                 <Rating value={average} count={reviews.length * 410} />
@@ -89,7 +89,7 @@ function Hero() {
               Перейти на сайт школы →
             </AffiliateLink>
             <span className="text-xs" style={{ color: 'rgb(var(--color-muted))' }}>
-              practicum.yandex.ru
+              {practicum.site}
             </span>
           </div>
         </div>
@@ -98,9 +98,7 @@ function Hero() {
           className="mt-8 max-w-3xl text-lg leading-relaxed"
           style={{ color: 'rgb(var(--color-muted))' }}
         >
-          Одна из крупнейших IT-школ рунета. Работает с 2019 года, специализируется на профессиях в
-          разработке, аналитике, дизайне и управлении. Формат — интерактивный тренажёр,
-          двухнедельные спринты и обязательные код-ревью от наставников.
+          {practicum.intro}
         </p>
       </div>
     </section>
@@ -108,16 +106,10 @@ function Hero() {
 }
 
 function KeyFacts() {
-  const facts = [
-    { label: 'Запущена', value: '2019' },
-    { label: 'Направления', value: 'IT, дизайн, управление' },
-    { label: 'Формат', value: 'Онлайн + ревью' },
-    { label: 'Выпускников', value: '90 тыс.+' },
-  ]
   return (
     <section className="mx-auto max-w-6xl px-6 py-12">
       <dl className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-        {facts.map((f) => (
+        {practicum.facts.map((f) => (
           <div
             key={f.label}
             className="rounded-2xl border p-5"
@@ -152,17 +144,9 @@ function AboutSchool() {
         className="mt-6 space-y-4 text-base leading-relaxed"
         style={{ color: 'rgb(var(--color-fg))' }}
       >
-        <p>
-          Яндекс Практикум — подразделение Яндекса, которое с 2019 года обучает взрослых
-          IT-профессиям. Уже за первые годы школа стала одной из самых цитируемых в рунете, а её
-          методика — «сначала практика, потом теория» — разошлась по индустрии.
-        </p>
-        <p>
-          В основе обучения — интерактивный тренажёр в браузере: студент читает короткую порцию
-          теории, сразу пишет код, получает автоматическую проверку. Раз в спринт — проект, который
-          отдаётся на ревью наставнику. Такой цикл имитирует реальную работу в IT-команде, где код
-          всегда проходит код-ревью.
-        </p>
+        {practicum.about.map((paragraph) => (
+          <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+        ))}
         <p>
           Практикум работает по оферте, предлагает рассрочку через банки-партнёры и возврат денег за
           неоконченное обучение. У школы собственный{' '}
@@ -225,38 +209,7 @@ function Programs() {
 }
 
 function ProsCons() {
-  const pros = [
-    {
-      title: 'Интерактивный тренажёр',
-      body: 'Код пишется прямо в браузере с автоматической проверкой — не нужно настраивать среду с первого дня.',
-    },
-    {
-      title: 'Реальное код-ревью',
-      body: 'Проекты проверяют практикующие разработчики, а не скрипты. Это близко к рабочему процессу в продуктовых командах.',
-    },
-    {
-      title: 'Бесплатная часть',
-      body: 'Первые 10–20 часов большинства курсов — бесплатно. Можно проверить, подходит ли формат, до оплаты.',
-    },
-    {
-      title: 'Центр карьеры',
-      body: 'Выпускникам помогают с резюме, проводят тренировочные собеседования и дают доступ к базе вакансий партнёров.',
-    },
-  ]
-  const cons = [
-    {
-      title: 'Высокая требовательность',
-      body: 'На большинство курсов рекомендуется минимум 15 часов в неделю. Совмещать с плотной работой тяжело.',
-    },
-    {
-      title: 'В пиковые периоды ревью замедляется',
-      body: 'В начале когорты и перед защитой дипломов очереди к ревьюерам удлиняются — обратная связь может идти по 1–2 дня.',
-    },
-    {
-      title: 'Подходит не всем темпом',
-      body: 'Спринты по 2 недели с жёсткими дедлайнами — это стресс. Часть студентов уходит в первый месяц.',
-    },
-  ]
+  const { pros, cons } = practicum
   return (
     <section className="mx-auto max-w-6xl px-6 py-12">
       <h2 className="text-2xl font-bold tracking-tight" style={{ color: 'rgb(var(--color-fg))' }}>

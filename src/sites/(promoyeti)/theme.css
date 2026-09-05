@@ -1,0 +1,223 @@
+@layer theme {
+  :root {
+    /*
+     * Bone paper, ink, deep emerald, signal orange.
+     *
+     * Chosen partly against the category: RetailMeNot is purple, CouponFollow
+     * navy-and-green, VoucherCodes red. A warm bone ground with an emerald
+     * primary reads as a publication rather than a discount wall, and leaves
+     * the orange free to mean exactly one thing — "there is a code here".
+     */
+    --color-bg: 245 244 240; /* #F5F4F0 bone */
+    --color-surface: 255 255 255; /* #FFFFFF card */
+    --color-fg: 18 20 26; /* #12141A ink */
+    --color-muted: 103 108 120; /* #676C78 slate */
+    --color-rule: 229 227 218; /* #E5E3DA hairline */
+    --color-primary: 15 92 74; /* #0F5C4A deep emerald */
+    --color-primary-fg: 255 255 255;
+    --color-accent: 255 90 31; /* #FF5A1F signal orange — codes only */
+    --color-accent-fg: 255 255 255;
+    --color-success: 15 122 90;
+    --color-danger: 185 42 42;
+  }
+
+  body {
+    font-family: var(--font-body, ui-sans-serif, system-ui, sans-serif);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/*
+ * Component classes must live in a layer that comes AFTER Tailwind's `base`
+ * (preflight). `theme` is ordered before it, so preflight's element resets —
+ * `ul { list-style: none }`, `p { margin: 0 }` — would beat these rules on
+ * layer order regardless of specificity.
+ */
+@layer components {
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display, ui-sans-serif, system-ui, sans-serif);
+    letter-spacing: -0.025em;
+  }
+
+  /* Small uppercase eyebrow above section headings. */
+  .pp-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* Store-page body prose. */
+  .store-prose {
+    color: rgb(var(--color-fg));
+    font-size: 1.0625rem;
+    line-height: 1.72;
+  }
+  .store-prose > * + * {
+    margin-top: 1.05rem;
+  }
+  .store-prose strong {
+    font-weight: 700;
+  }
+  .store-prose a {
+    color: rgb(var(--color-primary));
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* ── The brand wordmark ──────────────────────────────────────────────────
+   *
+   * We do not have merchant logos and are not going to hotlink them, so a
+   * brand "preview" is the brand's NAME set as a wordmark in its own colour.
+   * That is closer to the real thing than two-letter initials — a good share of
+   * these brands (FARFETCH, Steelcase, Timberland) have wordmark logos anyway —
+   * and it stays honest: it never pretends to be the registered mark.
+   */
+  .pp-wordmark {
+    font-family: var(--font-display, ui-sans-serif, system-ui, sans-serif);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  /* ── The coupon ticket ───────────────────────────────────────────────────
+   *
+   * A real perforation rather than a border: the two notches are circles
+   * filled with the PAGE background, punched in at each end of the dashed
+   * divider between the value rail and the offer body. The card's
+   * `overflow: hidden` clips their outer halves, leaving a bite out of the
+   * card edge.
+   *
+   * The notches are positioned against the divider element itself rather than
+   * by an offset from the card edge, because the divider moves: it is the
+   * body's TOP border below `sm` (the card stacks) and its LEFT border from
+   * `sm`. Anchoring to that element's corners means they follow it for free at
+   * any card height — a hand-tuned offset drifts the moment a title wraps.
+   */
+  .pp-ticket {
+    position: relative;
+    background: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-rule));
+    border-radius: 0.875rem;
+    overflow: hidden;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .pp-ticket:hover {
+    border-color: rgb(var(--color-fg) / 0.25);
+    box-shadow: 0 18px 36px -28px rgb(var(--color-fg) / 0.5);
+  }
+
+  .pp-notch {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 9999px;
+    background: rgb(var(--color-bg));
+    border: 1px solid rgb(var(--color-rule));
+    pointer-events: none;
+  }
+
+  /* Top-left corner of the divider: the left end of a horizontal perforation
+     below `sm`, the top end of a vertical one from `sm`. Same point either way. */
+  .pp-notch--start {
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Below `sm`: the far (right) end of the horizontal perforation. */
+  .pp-notch--end {
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+  }
+
+  /* From `sm`: the far (bottom) end of the vertical perforation. */
+  @media (min-width: 640px) {
+    .pp-notch--end {
+      top: auto;
+      right: auto;
+      bottom: 0;
+      left: 0;
+      transform: translate(-50%, 50%);
+    }
+  }
+
+  /*
+   * Perforation line — colour only.
+   *
+   * The dash comes from Tailwind's `border-dashed` utility on the element, not
+   * from here: v4's border-width utilities set `border-*-style` themselves and
+   * live in the `utilities` layer, which is ordered after `components`, so a
+   * `border-style: dashed` declared here is silently overridden back to solid.
+   */
+  .pp-perf {
+    border-color: rgb(var(--color-rule));
+  }
+
+  /* The big scannable label in the ticket's left rail. */
+  .pp-value {
+    font-family: var(--font-display, ui-sans-serif, system-ui, sans-serif);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 0.92;
+  }
+  .pp-value--word {
+    letter-spacing: -0.015em;
+    line-height: 1.05;
+  }
+
+  /*
+   * The code face: what a visitor sees before and after revealing a code.
+   *
+   * Before reveal the characters are blurred rather than replaced with dots, so
+   * the width of the real code is preserved and nothing jumps when it resolves.
+   * `user-select: none` stops anyone dragging an unrevealed code out of the
+   * page — the code is in the markup either way, so this is presentation, not
+   * security.
+   */
+  .pp-code-face {
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+  .pp-code-face--masked {
+    filter: blur(4.5px);
+    user-select: none;
+  }
+
+  /*
+   * The peeking code stub on an unrevealed CTA.
+   *
+   * Borrowed from every coupon site that works: the button does not cover the
+   * code entirely, a torn strip of it sticks out on the right. It reads as
+   * "there is a real string behind this", which is the single thing the button
+   * has to communicate.
+   */
+  .pp-stub {
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    border: 1px dashed rgb(var(--color-accent) / 0.65);
+    color: rgb(var(--color-accent));
+    background: rgb(var(--color-accent) / 0.08);
+  }
+
+  /* Horizontal chip rail that scrolls on a phone instead of wrapping. */
+  .pp-rail {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .pp-rail::-webkit-scrollbar {
+    display: none;
+  }
+}

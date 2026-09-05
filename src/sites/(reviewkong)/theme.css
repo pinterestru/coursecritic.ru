@@ -1,0 +1,217 @@
+@layer theme {
+  :root {
+    /* Editorial paper palette — warm off-white stock, ink black, deep teal
+       accent. Same reading-first feel as our other editorial sites, but its
+       own colourway so the two are never mistaken for each other. */
+    --color-bg: 250 248 244; /* #FAF8F4 paper */
+    --color-surface: 255 255 255; /* #FFFFFF card */
+    --color-fg: 22 24 28; /* #16181C ink */
+    --color-muted: 106 110 118; /* #6A6E76 cool gray */
+    --color-rule: 226 222 213; /* #E2DED5 hairline */
+    --color-primary: 15 110 100; /* #0F6E64 deep teal */
+    --color-primary-fg: 250 248 244;
+    --color-accent: 200 141 51; /* #C88D33 amber stars */
+    --color-success: 30 112 78; /* forest */
+    --color-danger: 168 46 46; /* brick */
+  }
+
+  body {
+    font-family: var(--font-body, ui-sans-serif, system-ui, sans-serif);
+    font-feature-settings: 'ss01', 'cv11', 'cv02';
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(
+        circle at 15% -10%,
+        rgb(var(--color-primary) / 0.06) 0%,
+        rgb(var(--color-bg) / 0) 42%
+      ),
+      radial-gradient(
+        circle at 105% 105%,
+        rgb(var(--color-accent) / 0.07) 0%,
+        rgb(var(--color-bg) / 0) 50%
+      );
+    background-attachment: fixed;
+  }
+}
+
+/*
+ * Component classes must live in a layer that comes AFTER Tailwind's `base`
+ * (preflight). `theme` is ordered before it, so preflight's element resets —
+ * `ul { list-style: none; padding: 0 }`, `p { margin: 0 }` — would beat these
+ * rules on layer order regardless of specificity, silently flattening
+ * paragraph spacing and removing list markers inside article bodies.
+ */
+@layer components {
+  h1,
+  h2,
+  h3,
+  blockquote,
+  .font-editorial {
+    font-family: var(--font-editorial, 'Source Serif 4', Georgia, serif);
+    font-feature-settings: 'lnum', 'pnum';
+    letter-spacing: -0.01em;
+  }
+
+  /* Article body prose — used inside /articles guides and brand write-ups. */
+  .article-prose {
+    color: rgb(var(--color-fg));
+    font-size: 1.0625rem;
+    line-height: 1.75;
+  }
+  .article-prose > * + * {
+    margin-top: 1.1rem;
+  }
+  .article-prose h3 {
+    font-family: var(--font-editorial, 'Source Serif 4', Georgia, serif);
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-top: 1.8rem;
+    color: rgb(var(--color-fg));
+  }
+  .article-prose strong {
+    font-weight: 700;
+    color: rgb(var(--color-fg));
+  }
+  .article-prose a {
+    color: rgb(var(--color-primary));
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .article-prose ul,
+  .article-prose ol {
+    padding-left: 1.25rem;
+  }
+  .article-prose ul {
+    list-style: disc;
+  }
+  .article-prose ol {
+    list-style: decimal;
+  }
+  .article-prose li {
+    margin-top: 0.4rem;
+  }
+  .article-prose li::marker {
+    color: rgb(var(--color-primary));
+  }
+  .article-prose blockquote {
+    border-left: 3px solid rgb(var(--color-primary));
+    padding-left: 1rem;
+    font-style: italic;
+    color: rgb(var(--color-muted));
+  }
+
+  /* Decorative section rule — hairline with a dot on the left. */
+  .rule-dot {
+    position: relative;
+    border-top: 1px solid rgb(var(--color-rule));
+  }
+  .rule-dot::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgb(var(--color-primary));
+  }
+}
+
+@layer components {
+  /*
+   * Auto-scrolling review ticker in the hero.
+   *
+   * One widget, two orientations: it runs horizontally on small screens and
+   * vertically from `lg`, where it sits in the column beside the hero copy.
+   *
+   * The track holds the list twice and travels exactly -50%, so the second copy
+   * arrives where the first started and the loop is seamless. Duplicating in
+   * markup rather than cloning in JS keeps this a server component — there is
+   * no state here worth shipping a bundle for. The duplicate is aria-hidden in
+   * the JSX, so a screen reader reads each review once.
+   */
+  .rk-ticker-mask {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent);
+    mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent);
+  }
+
+  .rk-ticker-track {
+    display: flex;
+    width: max-content;
+    animation: rk-ticker-x 46s linear infinite;
+  }
+
+  @media (min-width: 1024px) {
+    .rk-ticker-mask {
+      height: 560px;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent);
+      mask-image: linear-gradient(to bottom, transparent 0, #000 9%, #000 91%, transparent);
+    }
+
+    .rk-ticker-track {
+      flex-direction: column;
+      width: auto;
+      animation-name: rk-ticker-y;
+      animation-duration: 64s;
+    }
+  }
+
+  /* Stop while a reader is looking at it, or tabbing through its links. */
+  .rk-ticker-mask:hover .rk-ticker-track,
+  .rk-ticker-mask:focus-within .rk-ticker-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes rk-ticker-x {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes rk-ticker-y {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-50%);
+    }
+  }
+
+  /*
+   * With "reduce motion" on, the ticker stops — auto-scrolling content is a
+   * genuine problem for vestibular disorders, and every review in here is also
+   * reachable from the sections below and the A-Z index.
+   *
+   * Stopping is not enough on its own, though: a frozen track is wider than its
+   * mask, so the reader would see a row of cards cut off mid-card with no way
+   * to reach the rest. So the widget hands scrolling back to them, and the
+   * edge fade goes away because there is no longer any motion for it to soften.
+   *
+   * NOTE for anyone debugging "the ticker does not move": check this setting
+   * first. A machine with it enabled is behaving correctly, not broken.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    .rk-ticker-track {
+      animation: none;
+    }
+
+    .rk-ticker-mask {
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    @media (min-width: 1024px) {
+      .rk-ticker-mask {
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+    }
+  }
+}

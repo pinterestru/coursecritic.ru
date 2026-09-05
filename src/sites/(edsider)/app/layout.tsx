@@ -23,6 +23,8 @@ const ptSerif = PT_Serif({
 })
 
 export const metadata: Metadata = {
+  // Lets pages emit relative canonical/OG URLs that resolve to absolute ones.
+  metadataBase: new URL(activeSiteConfig.seo.canonicalUrl),
   title: {
     default: activeSiteConfig.brand.name,
     template: activeSiteConfig.seo.titleTemplate,

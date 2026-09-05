@@ -2,12 +2,7 @@ import Link from 'next/link'
 
 export default function SiteHeader() {
   return (
-    <header
-      className="sticky top-0 z-30 backdrop-blur-md"
-      style={{
-        background: 'rgb(var(--color-bg) / 0.85)',
-      }}
-    >
+    <header style={{ background: 'rgb(var(--color-bg))' }}>
       {/* Editorial issue strip */}
       <div
         className="border-b"

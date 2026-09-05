@@ -1,0 +1,255 @@
+/**
+ * Provider registry for the beauty and wellness vertical.
+ *
+ * Two things matter more here than price: whether the stock is authorised (the
+ * grey market in fragrance and cosmetics is large), and what a subscription
+ * costs to leave. Every entry addresses both.
+ *
+ * SOURCES — authenticity, shipping-restriction and subscription terms come from
+ * each retailer's own policy pages, plus public review aggregates. Individual
+ * figures are cited in the matching data/brands/<slug>.ts file.
+ *
+ * ⚠️ Shipping restrictions on liquids and supplements vary by destination
+ * country and change; re-verify before a campaign. See ../../README.md.
+ */
+import type { Provider } from '../guides/types'
+
+export const beautyProviders: Record<string, Provider> = {
+  nykaa: {
+    id: 'nykaa',
+    name: 'Nykaa',
+    badge: 'NY',
+    color: '#FC2779',
+    vertical: 'beauty',
+    domain: 'nykaa.com',
+    siteLabel: 'nykaa.com',
+    score: 4.1,
+    tagline: 'India’s largest online beauty platform, 4,000+ brands and a deep own-label bench',
+    founded: 'founded 2012',
+    reach: '4,000+ brands, 42M+ customers served',
+    priceNote: 'free returns within 15 days; own-label lines priced as the value tier',
+    format: 'Beauty, wellness and fashion marketplace, website, app and 100+ stores',
+    highlights: [
+      'Deepest India-focused beauty catalogue of any brand on this site',
+      'Real own-label bench — Nykaa Cosmetics, Kay Beauty, Dot & Key — not rebadged stock',
+      'Nykaa Prive loyalty membership is free to join, no signup fee',
+      'Refunds processed within 24-48 hours of the returned item being received',
+    ],
+    pros: [
+      'Unmatched catalogue breadth and own-label depth for the Indian market',
+      'Free loyalty tier rather than a paid membership requirement',
+      'Published, fast refund-processing timeline',
+    ],
+    cons: [
+      'Trustpilot rates the site "Bad" at 1.2 out of 5, with recurring delivery and support complaints',
+      'Built around India — service quality outside that market is unproven',
+    ],
+    trust: [
+      '15-day return window from delivery',
+      'Free Nykaa Prive loyalty membership',
+      'Public company (FSN E-Commerce Ventures), listed since 2021',
+    ],
+    ratings: [{ source: 'Trustpilot', value: 1.2 }],
+    tracked: true,
+    topCta: 'Browse Nykaa beauty →',
+    brandSlug: 'nykaa',
+  },
+  lookfantastic: {
+    id: 'lookfantastic',
+    name: 'Lookfantastic',
+    badge: 'LF',
+    color: '#1A1A1A',
+    vertical: 'beauty',
+    domain: 'lookfantastic.com',
+    siteLabel: 'lookfantastic.com',
+    score: 3.9,
+    tagline: 'UK beauty retailer under THG plc, shipping worldwide with a 30-day return window',
+    founded: 'founded 1996',
+    reach: 'ships to 200+ countries from the UK',
+    priceNote: 'free worldwide shipping; import duties charged separately outside the UK',
+    format: 'Third-party beauty and haircare retailer, part of THG plc since 2010',
+    highlights: [
+      'UK storefront rated "Excellent" (4.6/5) on Trustpilot at very high review volume',
+      '30-day return window, longer than most beauty retailers on this site',
+      'Free LF Beauty Plus+ points scheme with a real referral payout',
+      'Complimentary shipping to over 200 countries from its UK base',
+    ],
+    pros: [
+      'Strong, sustained Trustpilot record on the flagship UK site',
+      '30-day return window gives more room than typical 14-day policies',
+      'Free loyalty scheme pays out for reviews and referrals, not just purchases',
+    ],
+    cons: [
+      'Regional Trustpilot scores vary sharply — Norway and Denmark rate far lower than the UK site',
+      'Import duties and VAT apply separately on non-UK orders and are not shown at checkout',
+    ],
+    trust: [
+      '30-day returns via the ZigZag returns portal',
+      'Part of THG plc since 2010',
+      'Free LF Beauty Plus+ loyalty membership',
+    ],
+    ratings: [
+      { source: 'Trustpilot (UK)', value: 4.6 },
+      { source: 'Trustpilot (Norway)', value: 1.7 },
+    ],
+    tracked: true,
+    topCta: 'Browse Lookfantastic beauty →',
+    brandSlug: 'lookfantastic',
+  },
+  scentbird: {
+    id: 'scentbird',
+    name: 'Scentbird',
+    badge: 'SB',
+    color: '#7B5EA7',
+    vertical: 'beauty',
+    domain: 'scentbird.com',
+    siteLabel: 'scentbird.com',
+    score: 3.8,
+    tagline: 'Monthly 8mL fragrance vials picked from a designer and niche catalogue',
+    founded: 'founded 2014',
+    reach: 'ships to US, Canada and UK, hundreds of fragrances',
+    priceNote: 'from around $17.95/month for one vial',
+    format: 'Subscription vials of designer and niche perfume/cologne, queue-based',
+    highlights: [
+      'A real try-before-you-buy alternative to guessing at a fragrance counter',
+      'Queue-based delivery, skip or pause any month without losing your profile',
+      'Designer names sit alongside independent and niche houses in one catalogue',
+      'Multi-vial plans bring the per-vial price down for regular subscribers',
+    ],
+    pros: [
+      'Genuinely useful for testing a scent for weeks before buying a full bottle',
+      'Pausing keeps your queue and preferences intact, unlike cancelling outright',
+      'Catalogue breadth makes it a real discovery tool, not just a discount channel',
+    ],
+    cons: [
+      'Miss the cancellation cutoff before the 5th and that cycle bills anyway',
+      'Direct shipping covers only the US, Canada and UK',
+    ],
+    trust: [
+      'Skip or pause without losing your fragrance queue',
+      'Refunds available only within 12 hours of a charge',
+      'Luxury/niche surcharge disclosed at checkout, not hidden in the base price',
+    ],
+    ratings: [{ source: 'Trustpilot', value: 3.8 }],
+    tracked: true,
+    topCta: 'Browse Scentbird fragrances →',
+    brandSlug: 'scentbird',
+  },
+  iherb: {
+    id: 'iherb',
+    name: 'iHerb',
+    badge: 'IH',
+    color: '#4C9F38',
+    vertical: 'beauty',
+    domain: 'iherb.com',
+    siteLabel: 'iherb.com',
+    score: 4.4,
+    tagline: 'US supplement and wellness retailer built for international shipping',
+    founded: 'founded 1996',
+    reach: 'ships to 180+ countries, ~50,000 products from ~1,900 brands',
+    priceNote: 'free shipping above a country-set order minimum',
+    format: 'Direct-to-consumer supplement, vitamin and wellness retailer',
+    highlights: [
+      'One of the few supplement retailers built for international shipping from day one',
+      'Tens of thousands of products from close to two thousand brands',
+      'Loyalty Credit returns roughly 10% of an order as credit toward the next one',
+      '90-day return window on iHerb-brand products, versus 30 days standard',
+    ],
+    pros: [
+      'Catalogue breadth most general retailers and pharmacies cannot match',
+      'Genuinely built for shipping to international customers, not just the US',
+      'Autoship & Save automates repeat orders of everyday vitamins and protein',
+    ],
+    cons: [
+      'Free-shipping order minimum differs by destination country',
+      'Refunds to non-US payment methods can take up to five weeks',
+    ],
+    trust: [
+      'Direct sourcing positioning against counterfeit supplements',
+      '90-day return window on iHerb-brand products',
+      'Loyalty Credit program on qualifying orders',
+    ],
+    ratings: [{ source: 'Trustpilot', value: 3.8 }],
+    tracked: true,
+    topCta: 'Browse iHerb products →',
+    brandSlug: 'iherb',
+  },
+  sephora: {
+    id: 'sephora',
+    name: 'Sephora Poland',
+    badge: 'SE',
+    color: '#1A1A1A',
+    vertical: 'beauty',
+    domain: 'sephora.pl',
+    siteLabel: 'sephora.pl',
+    score: 4.1,
+    tagline: 'The Polish storefront of the LVMH-owned beauty chain, priced and stocked locally',
+    founded: 'Sephora founded 1969, part of LVMH since 1997',
+    reach: 'Poland-only storefront inside a 3,000+ store global network',
+    priceNote: 'free delivery over 99 PLN, or free with any order via the app',
+    format: 'Prestige and mass beauty retailer, online and in Polish stores',
+    highlights: [
+      'App orders ship free with no minimum spend, unusual among beauty retailers',
+      'Free returns through InPost parcel lockers, the default in Poland',
+      '30-day return window with refunds processed within 14 days',
+      'Full prestige-plus-mass Sephora catalogue stocked for the Polish market',
+    ],
+    pros: [
+      'No-minimum free delivery when ordering through the app',
+      'Genuinely free return route via InPost lockers',
+      'Backed by LVMH’s global Sephora scale and supplier relationships',
+    ],
+    cons: [
+      'Recurring Trustpilot complaints about orders cancelled after payment for stock issues',
+      'No online refunds for items bought in a physical Sephora Poland store',
+    ],
+    trust: [
+      '30-day return window from delivery',
+      'Free InPost parcel-locker returns',
+      'Part of LVMH, backing a 3,000+ store global network since 1997',
+    ],
+    ratings: [], // no verifiable numeric score found for sephora.pl specifically — omitted, not guessed
+    tracked: true,
+    topCta: 'Browse Sephora Poland →',
+    brandSlug: 'sephora',
+  },
+  bathandbodyworks: {
+    id: 'bathandbodyworks',
+    name: 'Bath & Body Works Gulf',
+    badge: 'BB',
+    color: '#2E5E4E',
+    vertical: 'beauty',
+    domain: 'bathandbodyworks.ae',
+    siteLabel: 'bathandbodyworks.ae',
+    score: 3.9,
+    tagline: 'The UAE/Gulf franchise of the fragrance and body-care chain, run by Alshaya',
+    founded: 'Gulf franchise trading since 2010',
+    reach: 'UAE storefront, delivery across the Gulf under M.H. Alshaya Co.',
+    priceNote: 'free delivery above a stated order threshold',
+    format: 'Fragrance, body care and home-candle retailer, franchised regionally',
+    highlights: [
+      'Aura loyalty points work across nearly 50 other Alshaya-run brands in the region',
+      'Local UAE delivery instead of a US cross-border order from bathandbodyworks.com',
+      'Free entry-level Aura Hello tier, no purchase required to join',
+      'Full fragrance, body-care and home-candle range carried locally',
+    ],
+    pros: [
+      'Aura points and rewards carry over to other Alshaya-operated retailers',
+      'Faster, local delivery than ordering from the US site',
+      'Free loyalty entry tier from the first purchase',
+    ],
+    cons: [
+      'Used fragrance and personal-care items are excluded from exchange entirely',
+      'No stated return-window length in the published terms, only a receipt requirement',
+    ],
+    trust: [
+      'Receipt-based returns via the nearest regional store',
+      'Aura loyalty programme, rewards valid 90 days from issue',
+      'Operated by M.H. Alshaya Co., a ~4,000-store regional franchise group',
+    ],
+    ratings: [{ source: 'Trustpilot', value: 2.3 }],
+    tracked: true,
+    topCta: 'Browse Bath & Body Works Gulf →',
+    brandSlug: 'bathandbodyworks',
+  },
+}

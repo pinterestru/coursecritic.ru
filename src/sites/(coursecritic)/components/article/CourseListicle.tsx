@@ -57,19 +57,23 @@ export default function CourseListicle({ article }: { article: Article }) {
               </div>
             </div>
 
-            <figure
-              className="mt-8 overflow-hidden rounded-3xl"
-              style={{ boxShadow: '0 1px 0 rgb(var(--color-rule)), 0 0 0 1px rgb(var(--color-rule))' }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={article.hero.src}
-                alt={article.hero.alt}
-                width={1040}
-                height={585}
-                className="w-full"
-              />
-            </figure>
+            {article.hero && (
+              <figure
+                className="mt-8 overflow-hidden rounded-3xl"
+                style={{
+                  boxShadow: '0 1px 0 rgb(var(--color-rule)), 0 0 0 1px rgb(var(--color-rule))',
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={article.hero.src}
+                  alt={article.hero.alt}
+                  width={1040}
+                  height={585}
+                  className="w-full"
+                />
+              </figure>
+            )}
 
             <div className="max-w-2xl">
               <section id="start" className="scroll-mt-24">
@@ -118,18 +122,31 @@ export default function CourseListicle({ article }: { article: Article }) {
                   <table className="w-full border-collapse text-left text-[15px]">
                     <thead>
                       <tr style={{ color: 'rgb(var(--color-muted))' }}>
-                        <th className="w-8 py-2 pr-2 text-xs font-medium tracking-wide uppercase">#</th>
-                        <th className="px-3 py-2 text-xs font-medium tracking-wide uppercase">Курс</th>
-                        <th className="px-3 py-2 text-xs font-medium tracking-wide uppercase">Срок</th>
-                        <th className="px-3 py-2 text-xs font-medium tracking-wide uppercase">Цена</th>
-                        <th className="py-2 pl-3 text-xs font-medium tracking-wide uppercase">Отзывы</th>
+                        <th className="w-8 py-2 pr-2 text-xs font-medium tracking-wide uppercase">
+                          #
+                        </th>
+                        <th className="px-3 py-2 text-xs font-medium tracking-wide uppercase">
+                          Курс
+                        </th>
+                        <th className="px-3 py-2 text-xs font-medium tracking-wide uppercase">
+                          Срок
+                        </th>
+                        <th className="px-3 py-2 text-xs font-medium tracking-wide uppercase">
+                          Цена
+                        </th>
+                        <th className="py-2 pl-3 text-xs font-medium tracking-wide uppercase">
+                          Отзывы
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
                       {article.courses.map((c) => {
                         const review = REVIEWS[c.provider]
                         return (
-                          <tr key={c.rank} style={{ borderTop: '1px solid rgb(var(--color-rule))' }}>
+                          <tr
+                            key={c.rank}
+                            style={{ borderTop: '1px solid rgb(var(--color-rule))' }}
+                          >
                             <td
                               className="py-2.5 pr-2 font-serif font-semibold tabular-nums"
                               style={{ color: 'rgb(var(--color-primary))' }}
@@ -189,7 +206,11 @@ export default function CourseListicle({ article }: { article: Article }) {
                 <ul className="space-y-2.5">
                   {article.match.map((m, i) => (
                     <li key={i} className="flex gap-2.5">
-                      <span aria-hidden className="flex-none" style={{ color: 'rgb(var(--color-primary))' }}>
+                      <span
+                        aria-hidden
+                        className="flex-none"
+                        style={{ color: 'rgb(var(--color-primary))' }}
+                      >
                         →
                       </span>
                       <span>
@@ -229,11 +250,6 @@ export default function CourseListicle({ article }: { article: Article }) {
                 style={{ borderColor: 'rgb(var(--color-rule))', color: 'rgb(var(--color-muted))' }}
               >
                 <p>
-                  В тексте есть партнёрские ссылки: если вы перейдёте по ним и оформите курс, я могу
-                  получить небольшую комиссию. На цену для вас это не влияет, а мне помогает писать
-                  такие разборы.
-                </p>
-                <p className="mt-4">
                   Вопросы и свой опыт пишите на{' '}
                   <a
                     href="mailto:anya@coursecritic.ru"
@@ -270,7 +286,10 @@ function Section({ id, heading, children }: { id: string; heading: string; child
   return (
     <section id={id} className="scroll-mt-24">
       <Heading className="mt-14">{heading}</Heading>
-      <div className="space-y-5 text-[17px] leading-[1.75]" style={{ color: 'rgb(var(--color-fg))' }}>
+      <div
+        className="space-y-5 text-[17px] leading-[1.75]"
+        style={{ color: 'rgb(var(--color-fg))' }}
+      >
         {children}
       </div>
     </section>
@@ -280,7 +299,9 @@ function Section({ id, heading, children }: { id: string; heading: string; child
 // Section heading with a small brand-colored accent square in the left margin.
 function Heading({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
-    <h2 className={`mb-5 font-serif text-2xl leading-snug font-semibold sm:text-[28px] ${className}`}>
+    <h2
+      className={`mb-5 font-serif text-2xl leading-snug font-semibold sm:text-[28px] ${className}`}
+    >
       <span
         aria-hidden
         className="mr-3 inline-block h-2 w-2 translate-y-[-3px] rounded-[2px]"

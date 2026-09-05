@@ -5,6 +5,81 @@ import Logo from '../components/Logo'
 
 const posts: { href: Route; title: string; excerpt: string; date: string }[] = [
   {
+    href: '/otzyvy-ob-onlayn-shkolah',
+    title: 'Отзывы об онлайн-школах: что в них правда, а что шум',
+    excerpt:
+      'Прочитала подряд всё, что нашла об одной школе, и поняла, что читала отзывы неправильно.',
+    date: '31 августа 2026',
+  },
+  {
+    href: '/kursy-ege-russkiy',
+    title: 'Топ-5 курсов подготовки к ЕГЭ по русскому языку в 2026 году',
+    excerpt: 'Единственная тема, где я разбираюсь профессионально, — и где курсы врут чаще всего.',
+    date: '31 августа 2026',
+  },
+  {
+    href: '/kursy-ege-obshchestvoznanie',
+    title: 'Топ-5 курсов подготовки к ЕГЭ по обществознанию в 2026 году',
+    excerpt: 'Две семьи, одна школа, один предмет — и противоположный результат. Разбираю почему.',
+    date: '31 августа 2026',
+  },
+  {
+    href: '/sotka-ili-umschool',
+    title: 'Сотка или Умскул: что мы выбрали и почему',
+    excerpt: 'Обе продают одно и то же. Разница в том, как они считают деньги, — и она решает всё.',
+    date: '31 августа 2026',
+  },
+  {
+    href: '/kak-vybrat-prepodavatelya',
+    title: 'Как выбрать преподавателя, а не школу',
+    excerpt: 'Вы платите бренду, а учитесь у человека. Связи между этим меньше, чем кажется.',
+    date: '31 августа 2026',
+  },
+  {
+    href: '/brat-sdaval-oge',
+    title: 'Брат сдавал ОГЭ. Что я поняла про девятый класс',
+    excerpt:
+      'Думала, это репетиция ЕГЭ. Оказалось, про другое — и мой тогдашний совет был неверным.',
+    date: '31 августа 2026',
+  },
+  {
+    href: '/kursy-ege-informatika',
+    title: 'Топ-5 курсов подготовки к ЕГЭ по информатике в 2026 году',
+    excerpt: 'Разбирала для брата: цены, формат и главный вопрос — пишут там код или нет.',
+    date: '31 августа 2026',
+  },
+  {
+    href: '/kursy-ege-matematika',
+    title: 'Топ-5 курсов подготовки к ЕГЭ по профильной математике в 2026',
+    excerpt: 'Предмет, который нельзя выучить за три месяца, и школы, которые обещают обратное.',
+    date: '31 августа 2026',
+  },
+  {
+    href: '/besplatnye-kursy-dlya-shkolnika',
+    title: '6 бесплатных курсов для школьника, который хочет в айти',
+    excerpt: 'Всё, что можно пройти за ноль рублей, прежде чем кто-то заплатит сорок пять тысяч.',
+    date: '31 августа 2026',
+  },
+  {
+    href: '/skolko-stoit-podgotovka-k-ege',
+    title: 'Сколько стоит подготовка к ЕГЭ: посчитала честно',
+    excerpt:
+      'Курсы, репетитор, скидки за комплект и вычет. С цифрами и без желания оправдать покупку.',
+    date: '31 августа 2026',
+  },
+  {
+    href: '/ege-informatika-ili-python',
+    title: 'Учить Python или готовиться к ЕГЭ: что школьнику раньше',
+    excerpt: 'Ложная развилка: две разные вещи, которые случайно пересеклись. Разбираю где именно.',
+    date: '31 августа 2026',
+  },
+  {
+    href: '/bratu-16-hochet-v-it',
+    title: 'Брату 16, он хочет в айти. Что я ему ответила',
+    excerpt: 'Спойлер: отговорила покупать курс по программированию. Объясняю почему.',
+    date: '31 августа 2026',
+  },
+  {
     href: '/kursy-frontend-razrabotchika',
     title: 'Топ-7 курсов фронтенд-разработчика в 2026 году',
     excerpt: 'Сравнила семь школ — цены, сроки, стек и гарантии. Честный разбор без хайпа.',
@@ -55,10 +130,7 @@ export default function HomePage() {
           {posts.map((post) => (
             <li key={post.href}>
               <Link href={post.href} className="group block no-underline">
-                <div
-                  className="text-xs tabular-nums"
-                  style={{ color: 'rgb(var(--color-muted))' }}
-                >
+                <div className="text-xs tabular-nums" style={{ color: 'rgb(var(--color-muted))' }}>
                   {post.date}
                 </div>
                 <h3
@@ -67,7 +139,10 @@ export default function HomePage() {
                 >
                   {post.title}
                 </h3>
-                <p className="mt-1 text-sm leading-relaxed" style={{ color: 'rgb(var(--color-muted))' }}>
+                <p
+                  className="mt-1 text-sm leading-relaxed"
+                  style={{ color: 'rgb(var(--color-muted))' }}
+                >
                   {post.excerpt}
                 </p>
               </Link>

@@ -59,7 +59,13 @@ export interface Article {
   dateLabel: string
   author: string
   readingTime: string
-  hero: { src: string; alt: string }
+  /**
+   * Bespoke hero illustration. Optional: an article without one renders
+   * straight from the byline into the intro rather than showing a borrowed
+   * image, which is worse than none — a reused illustration carries alt text
+   * that describes a different article.
+   */
+  hero?: { src: string; alt: string }
   /** Italic standfirst under the title. */
   lede: string
   introHeading: string

@@ -1,5 +1,5 @@
-import type { Course } from '../data/practicum-courses'
-import { schools } from '../data/practicum-courses'
+import type { Course } from '../data/home'
+import { schools, resolveHref } from '../data/home'
 
 import AffiliateLink from './AffiliateLink'
 
@@ -12,9 +12,11 @@ export default function CourseCard({
 }) {
   const school = schools[course.schoolId]
 
-  const directHref = course.practicumPath
+  const directUrl = course.practicumPath
     ? `https://practicum.yandex.ru${course.practicumPath}`
     : (course.externalUrl ?? school.url)
+  // Affiliate schools route through /click/<domain>/<path>; others link direct.
+  const directHref = resolveHref(directUrl, course.schoolId)
 
   const inner = (
     <article
@@ -138,7 +140,12 @@ export default function CourseCard({
   }
 
   return (
-    <a href={directHref} target="_blank" rel="noopener" className="block h-full">
+    <a
+      href={directHref}
+      target="_blank"
+      rel={school.affiliate ? 'noopener sponsored' : 'noopener'}
+      className="block h-full"
+    >
       {inner}
     </a>
   )

@@ -108,7 +108,19 @@ jobs:
 
             docker compose -f docker-compose.production.yml up -d --remove-orphans
 
+            # The loop must be able to FAIL. Without the explicit exit, every
+            # probe can time out and the job still reports success — a green
+            # deploy badge over a container that never came up.
+            healthy=0
             for i in {1..20}; do
-              curl -fsS "http://127.0.0.1:${PORT}/api/health" && break
+              if curl -fsS "http://127.0.0.1:${PORT}/api/health"; then
+                healthy=1
+                break
+              fi
               sleep 3
             done
+            if [ "$healthy" -ne 1 ]; then
+              echo "::error::Health check never passed on port ${PORT} after 20 attempts (60s)."
+              docker compose -f docker-compose.production.yml logs --tail=100 app || true
+              exit 1
+            fi

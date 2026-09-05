@@ -1,5 +1,5 @@
 import CourseCard from '../components/CourseCard'
-import { categoriesOrder, courses } from '../data/practicum-courses'
+import { categoriesOrder, courses } from '../data/home'
 
 export default function HomePage() {
   return (

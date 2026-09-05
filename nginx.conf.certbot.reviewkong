@@ -1,0 +1,30 @@
+# Minimal Nginx config for Certbot SSL certificate request
+# Domain: reviewkong.com
+#
+# Usage:
+# 1. Copy to /etc/nginx/sites-available/reviewkong.com
+# 2. ln -s /etc/nginx/sites-available/reviewkong.com /etc/nginx/sites-enabled/
+# 3. nginx -t && systemctl reload nginx
+# 4. sudo certbot certonly --webroot -w /var/www/certbot -d reviewkong.com -d www.reviewkong.com -m you@example.com --agree-tos --no-eff-email
+# 5. After certs obtained, replace with full nginx.conf.reviewkong
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name reviewkong.com www.reviewkong.com;
+
+    # Webroot for ACME challenge
+    root /var/www/certbot;
+
+    # ACME challenge location
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+        allow all;
+    }
+
+    # Temporary: return 200 for all other requests
+    location / {
+        return 200 'Server is being configured. Please wait...';
+        add_header Content-Type text/plain;
+    }
+}

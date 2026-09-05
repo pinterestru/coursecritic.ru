@@ -2,6 +2,7 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 
+import { activeSiteConfig } from '@/config/sites/active.generated'
 import { logger } from '@/lib/logging/logger'
 import { marketingProcess } from '@/lib/services/tracker/tracker.api'
 import { notify } from '@/lib/services/notification/notification.api'
@@ -29,6 +30,51 @@ function normalizeTags(tags: string[]): string[] {
   return tags
 }
 
+/**
+ * A syntactically valid, lowercase DNS hostname and nothing else.
+ *
+ * The destination host comes straight out of the request path, so this is what
+ * stops `user@evil.com` (authority takeover), `evil.com%23@real.com` (fragment
+ * disguise), CRLF injection and any other payload that is not simply a domain.
+ * Punycode (`xn--`) is rejected outright: no offer here uses it, and permitting
+ * it would allow registrable homographs of the real advertisers.
+ */
+const HOSTNAME = /^(?!-)[a-z0-9-]{1,63}(?<!-)(\.(?!-)[a-z0-9-]{1,63}(?<!-))+$/
+
+function isValidHost(host: string): boolean {
+  if (host.length > 253 || !HOSTNAME.test(host)) return false
+  return !host.split('.').some((label) => label.startsWith('xn--'))
+}
+
+/**
+ * Is this host one we are allowed to forward to?
+ *
+ * Exact match or a subdomain of an allowed host. Sites that do not declare
+ * `offerHosts` keep the previous permissive behaviour — hostname-validated but
+ * not allowlisted — so this change cannot break a site that has not opted in.
+ */
+function isAllowedHost(host: string): boolean {
+  const allowed = activeSiteConfig.offerHosts
+  if (!allowed || allowed.length === 0) return true
+  return allowed.some((entry) => {
+    const a = entry.toLowerCase()
+    return host === a || host.endsWith(`.${a}`)
+  })
+}
+
+/**
+ * The tracker answers with its OWN domain (a network host, not the advertiser),
+ * so it cannot be checked against `offerHosts`. Verify only that it is a
+ * well-formed http(s) URL — enough to exclude `javascript:` and `data:`.
+ */
+function isSafeRedirectUrl(url: string): boolean {
+  try {
+    return ['http:', 'https:'].includes(new URL(url).protocol)
+  } catch {
+    return false
+  }
+}
+
 function noStoreHeaders(): Headers {
   const headers = new Headers()
   headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
@@ -47,7 +93,10 @@ function noStoreHeaders(): Headers {
  * deep link (https://<offer_domain>/<path>). No client-side fingerprinting,
  * cloaking gate or analytics — just tracked redirect.
  */
-export async function GET(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ path: string[] }> }
+) {
   const { path } = await params
   const headers = noStoreHeaders()
 
@@ -57,17 +106,28 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     const tag = (tags.shift() || '').replace(/^www\./, '')
     const rest = tags.filter((v) => !!v).join('/')
 
-    // Guard against malformed links (no real domain in the tag).
-    if (!tag.includes('.')) {
+    // Reject anything that is not a plain hostname we are allowed to forward to.
+    // Both checks send the visitor to our own home page rather than erroring —
+    // a broken affiliate link should look like a dead link, not a stack trace.
+    const host = tag.toLowerCase()
+    if (!isValidHost(host)) {
+      logger.warn({ tag }, 'click: rejected malformed destination host')
+      return NextResponse.redirect(new URL('/', getWebsiteUrl()), { status: 302, headers })
+    }
+    if (!isAllowedHost(host)) {
+      logger.warn({ tag }, 'click: destination host is not a configured offer')
       return NextResponse.redirect(new URL('/', getWebsiteUrl()), { status: 302, headers })
     }
 
-    const fallback = `https://${tag}${rest ? `/${rest}` : ''}`
+    const fallback = `https://${host}${rest ? `/${rest}` : ''}`
 
     // Persist the per-offer MTFI cookie so the tracker can stitch the click to
     // the visitor's earlier flow.
     const cookieStore = await cookies()
-    const mtfiKey = `_mtfi__${tag}${rest ? `__${rest.split('/').join('_')}` : ''}`
+    // Sanitised because this lands in a Set-Cookie NAME: without it, a path like
+    // `pricing;%20evil=1` closes the cookie and injects a second one on our domain.
+    const cookieSafe = (value: string) => value.replace(/[^a-zA-Z0-9._-]/g, '_')
+    const mtfiKey = `_mtfi__${cookieSafe(host)}${rest ? `__${cookieSafe(rest.split('/').join('_'))}` : ''}`
     const mtfi = cookieStore.get(mtfiKey)?.value || undefined
 
     // Forward query params (utm_*, etc.) to the tracker, plus the deep-link path.
@@ -119,7 +179,14 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     }
 
     // Prefer the tracker's resolved URL; otherwise use the offer deep link.
-    const target = response.type === 'redirect' && response.url ? response.url : fallback
+    // The tracker's URL is its own network host, so it cannot be allowlisted
+    // against offerHosts — but it must still be a real http(s) URL rather than a
+    // javascript:/data: payload before we hand a visitor to it.
+    const trackerUrl =
+      response.type === 'redirect' && response.url && isSafeRedirectUrl(response.url)
+        ? response.url
+        : undefined
+    const target = trackerUrl ?? fallback
     return NextResponse.redirect(target, { status: 302, headers })
   } catch (error) {
     logger.error(

@@ -30,7 +30,16 @@
       );
     background-attachment: fixed;
   }
+}
 
+/*
+ * Component classes must live in a layer that comes AFTER Tailwind's `base`
+ * (preflight). `theme` is ordered before it, so preflight's element resets —
+ * `ul { list-style: none; padding: 0 }`, `p { margin: 0 }` — beat these rules on
+ * layer order regardless of specificity. That silently flattened paragraph
+ * spacing and removed list markers across every /articles guide.
+ */
+@layer components {
   h1,
   h2,
   h3,
@@ -39,6 +48,55 @@
     font-family: var(--font-editorial, 'PT Serif', Georgia, serif);
     font-feature-settings: 'lnum', 'pnum';
     letter-spacing: -0.01em;
+  }
+
+  /* Article body prose — used inside /articles guides */
+  .article-prose {
+    color: rgb(var(--color-fg));
+    font-size: 1.0625rem;
+    line-height: 1.75;
+  }
+  .article-prose > * + * {
+    margin-top: 1.1rem;
+  }
+  .article-prose h3 {
+    font-family: var(--font-editorial, 'PT Serif', Georgia, serif);
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-top: 1.8rem;
+    color: rgb(var(--color-fg));
+  }
+  .article-prose strong {
+    font-weight: 700;
+    color: rgb(var(--color-fg));
+  }
+  .article-prose a {
+    color: rgb(var(--color-primary));
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .article-prose ul,
+  .article-prose ol {
+    padding-left: 1.25rem;
+  }
+  .article-prose ul {
+    list-style: disc;
+  }
+  .article-prose ol {
+    list-style: decimal;
+  }
+  .article-prose li {
+    margin-top: 0.4rem;
+  }
+  .article-prose li::marker {
+    color: rgb(var(--color-primary));
+  }
+  .article-prose blockquote {
+    border-left: 3px solid rgb(var(--color-primary));
+    padding-left: 1rem;
+    font-style: italic;
+    color: rgb(var(--color-muted));
   }
 
   /* Decorative section rule — thin + dot accent */
